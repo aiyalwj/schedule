@@ -7,9 +7,9 @@ import com.lwj.schedule.mapper.RuleMapper;
 import org.springframework.stereotype.Service;
 
 /**
-* @author yangxiaofei
+* @author wz111
 * @description 针对表【Rule】的数据库操作Service实现
-* @createDate 2023-03-01 14:36:04
+* @createDate 2023-03-01 14:53:27
 */
 @Service
 public class RuleServiceImpl extends ServiceImpl<RuleMapper, Rule>

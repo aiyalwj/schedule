@@ -64,7 +64,6 @@ public class Employee implements Serializable {
     public void setEmployeeId(String employeeId) {
         this.employeeId = employeeId;
     }
-
     /**
      * 姓名
      */
@@ -160,6 +159,7 @@ public class Employee implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getEmployeeId() == null) ? 0 : getEmployeeId().hashCode());
+        result = prime * result + ((getEmployeeMail() == null) ? 0 : getEmployeeMail().hashCode());
         result = prime * result + ((getEmployeeName() == null) ? 0 : getEmployeeName().hashCode());
         result = prime * result + ((getEmployeeMail() == null) ? 0 : getEmployeeMail().hashCode());
         result = prime * result + ((getEmployeePosition() == null) ? 0 : getEmployeePosition().hashCode());
