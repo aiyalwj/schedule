@@ -25,7 +25,7 @@ public class Employeepreferences implements Serializable {
     private String employeeId;
 
     /**
-     * 偏好值(工作日和工作时间)
+     * 偏好值
      */
     @TableField(value = "EmployeePreferences_value")
     private String employeepreferencesValue;
@@ -62,14 +62,14 @@ public class Employeepreferences implements Serializable {
     }
 
     /**
-     * 偏好值(工作日和工作时间)
+     * 偏好值
      */
     public String getEmployeepreferencesValue() {
         return employeepreferencesValue;
     }
 
     /**
-     * 偏好值(工作日和工作时间)
+     * 偏好值
      */
     public void setEmployeepreferencesValue(String employeepreferencesValue) {
         this.employeepreferencesValue = employeepreferencesValue;

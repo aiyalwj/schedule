@@ -3,6 +3,9 @@ package com.lwj.schedule.mapper;
 import com.lwj.schedule.entity.Employee;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
 * @author wz111
@@ -12,7 +15,13 @@ import org.apache.ibatis.annotations.Mapper;
 */
 @Mapper
 public interface EmployeeMapper extends BaseMapper<Employee> {
+    void addEmployee(Employee employee);
 
+    List<Employee> listAllEmployee();
+
+    List<Employee> listEmployeeByIdName(@Param("id") String Id, @Param("name") String name);
+
+    void deleteEmployeeById(@Param("id") String id);
 }
 
 
