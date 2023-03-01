@@ -16,4 +16,24 @@
         Employee_id,Employee_mail,Employee_name,
         Employee_position,Employee_shop
     </sql>
+    <insert id="addEmployee">
+        insert into Employee(Employee_id, Employee_name, Employee_mail, Employee_position, Employee_shop)
+        values (#{employeeId},#{employeeName},#{employeeMail},#{employeePosition},#{employeeShop})
+    </insert>
+
+    <select id="listAllEmployee" resultType="com.lwj.schedule.entity.Employee">
+        select *
+        from Employee
+    </select>
+
+    <select id="listEmployeeByIdName" resultType="com.lwj.schedule.entity.Employee">
+        select *
+        from Employee
+        where Employee_id = #{id} and Employee_name like concat('%', #{name}, '%')
+    </select>
+
+    <delete id="deleteEmployeeById">
+        delete from Employee
+        where Employee_id = #{id}
+    </delete>
 </mapper>
