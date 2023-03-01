@@ -21,7 +21,7 @@ public class Employee implements Serializable {
     /**
      * 邮箱
      */
-    @TableId(value = "Employee_mail")
+    @TableField(value = "Employee_mail")
     private String employeeMail;
 
     /**
