@@ -27,10 +27,11 @@
         from Employee
     </select>
 
-    <select id="listEmployeeByIdName" resultType="com.lwj.schedule.entity.Employee">
+    <select id="listEmployeeById" resultType="com.lwj.schedule.entity.Employee">
         select *
         from Employee
-        where Employee_id = #{id} and Employee_name like concat('%', #{name}, '%')
+        where Employee_id = #{id}
+#           and Employee_name like concat('%', #{name}, '%')
     </select>
 
     <select id="listEmployeeById" resultType="com.lwj.schedule.entity.Employee">

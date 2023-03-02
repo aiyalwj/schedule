@@ -5,16 +5,23 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
-* @author yangxiaofei
+* @author wz111
 * @description 针对表【Employee(员工)】的数据库操作Mapper
-* @createDate 2023-03-01 14:35:35
+* @createDate 2023-02-25 16:34:12
 * @Entity com.lwj.schedule.entity.Employee
 */
 @Mapper
 public interface EmployeeMapper extends BaseMapper<Employee> {
+    void addEmployee(Employee employee);
 
-    Employee listEmployeeById(@Param("employee_id") String employee_id);
+    List<Employee> listAllEmployee();
+
+    List<Employee> listEmployeeById(@Param("id") String Id);
+
+    void deleteEmployeeById(@Param("id") String id);
 }
 
 
