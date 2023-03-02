@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @description 针对表【Employee(员工)】的数据库操作Service
 * @createDate 2023-03-01 14:35:35
 */
+
 public interface EmployeeService extends IService<Employee> {
 
     RespBean Login(String employee_id, String employee_pwd);

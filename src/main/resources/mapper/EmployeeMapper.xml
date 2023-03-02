@@ -5,16 +5,16 @@
 <mapper namespace="com.lwj.schedule.mapper.EmployeeMapper">
 
     <resultMap id="BaseResultMap" type="com.lwj.schedule.entity.Employee">
-        <id property="employeeId" column="Employee_id" jdbcType="VARCHAR"/>
-        <result property="employeeMail" column="Employee_mail" jdbcType="VARCHAR"/>
-        <result property="employeeName" column="Employee_name" jdbcType="VARCHAR"/>
-        <result property="employeePosition" column="Employee_position" jdbcType="VARCHAR"/>
-        <result property="employeeShop" column="Employee_shop" jdbcType="VARCHAR"/>
-        <result property="employeePwd" column="Employee_pwd" jdbcType="VARCHAR"/>
+            <id property="employeeId" column="Employee_id" jdbcType="VARCHAR"/>
+            <result property="employeeName" column="Employee_name" jdbcType="VARCHAR"/>
+            <result property="employeeMail" column="Employee_mail" jdbcType="VARCHAR"/>
+            <result property="employeePosition" column="Employee_position" jdbcType="VARCHAR"/>
+            <result property="employeeShop" column="Employee_shop" jdbcType="VARCHAR"/>
+            <result property="employeePwd"  column="Employee_pwd" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        Employee_id,Employee_mail,Employee_name,
+        Employee_id,Employee_name,Employee_mail,
         Employee_position,Employee_shop,Employee_pwd
     </sql>
     <insert id="addEmployee">
