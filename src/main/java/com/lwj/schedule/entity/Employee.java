@@ -19,16 +19,16 @@ public class Employee implements Serializable {
     private String employeeId;
 
     /**
-     * 邮箱
-     */
-    @TableField(value = "Employee_mail")
-    private String employeeMail;
-
-    /**
      * 姓名
      */
     @TableField(value = "Employee_name")
     private String employeeName;
+
+    /**
+     * 邮箱
+     */
+    @TableField(value = "Employee_mail")
+    private String employeeMail;
 
     /**
      * 职位
@@ -41,6 +41,12 @@ public class Employee implements Serializable {
      */
     @TableField(value = "Employee_shop")
     private String employeeShop;
+
+    /**
+     * 登录密码
+     */
+    @TableField(value = "Employee_pwd")
+    private String employeePwd;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
@@ -60,20 +66,6 @@ public class Employee implements Serializable {
     }
 
     /**
-     * 邮箱
-     */
-    public String getEmployeeMail() {
-        return employeeMail;
-    }
-
-    /**
-     * 邮箱
-     */
-    public void setEmployeeMail(String employeeMail) {
-        this.employeeMail = employeeMail;
-    }
-
-    /**
      * 姓名
      */
     public String getEmployeeName() {
@@ -85,6 +77,20 @@ public class Employee implements Serializable {
      */
     public void setEmployeeName(String employeeName) {
         this.employeeName = employeeName;
+    }
+
+    /**
+     * 邮箱
+     */
+    public String getEmployeeMail() {
+        return employeeMail;
+    }
+
+    /**
+     * 邮箱
+     */
+    public void setEmployeeMail(String employeeMail) {
+        this.employeeMail = employeeMail;
     }
 
     /**
@@ -115,6 +121,20 @@ public class Employee implements Serializable {
         this.employeeShop = employeeShop;
     }
 
+    /**
+     * 登录密码
+     */
+    public String getEmployeePwd() {
+        return employeePwd;
+    }
+
+    /**
+     * 登录密码
+     */
+    public void setEmployeePwd(String employeePwd) {
+        this.employeePwd = employeePwd;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -128,10 +148,11 @@ public class Employee implements Serializable {
         }
         Employee other = (Employee) that;
         return (this.getEmployeeId() == null ? other.getEmployeeId() == null : this.getEmployeeId().equals(other.getEmployeeId()))
-            && (this.getEmployeeMail() == null ? other.getEmployeeMail() == null : this.getEmployeeMail().equals(other.getEmployeeMail()))
             && (this.getEmployeeName() == null ? other.getEmployeeName() == null : this.getEmployeeName().equals(other.getEmployeeName()))
+            && (this.getEmployeeMail() == null ? other.getEmployeeMail() == null : this.getEmployeeMail().equals(other.getEmployeeMail()))
             && (this.getEmployeePosition() == null ? other.getEmployeePosition() == null : this.getEmployeePosition().equals(other.getEmployeePosition()))
-            && (this.getEmployeeShop() == null ? other.getEmployeeShop() == null : this.getEmployeeShop().equals(other.getEmployeeShop()));
+            && (this.getEmployeeShop() == null ? other.getEmployeeShop() == null : this.getEmployeeShop().equals(other.getEmployeeShop()))
+            && (this.getEmployeePwd() == null ? other.getEmployeePwd() == null : this.getEmployeePwd().equals(other.getEmployeePwd()));
     }
 
     @Override
@@ -139,10 +160,11 @@ public class Employee implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getEmployeeId() == null) ? 0 : getEmployeeId().hashCode());
-        result = prime * result + ((getEmployeeMail() == null) ? 0 : getEmployeeMail().hashCode());
         result = prime * result + ((getEmployeeName() == null) ? 0 : getEmployeeName().hashCode());
+        result = prime * result + ((getEmployeeMail() == null) ? 0 : getEmployeeMail().hashCode());
         result = prime * result + ((getEmployeePosition() == null) ? 0 : getEmployeePosition().hashCode());
         result = prime * result + ((getEmployeeShop() == null) ? 0 : getEmployeeShop().hashCode());
+        result = prime * result + ((getEmployeePwd() == null) ? 0 : getEmployeePwd().hashCode());
         return result;
     }
 
@@ -153,10 +175,11 @@ public class Employee implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", employeeId=").append(employeeId);
-        sb.append(", employeeMail=").append(employeeMail);
         sb.append(", employeeName=").append(employeeName);
+        sb.append(", employeeMail=").append(employeeMail);
         sb.append(", employeePosition=").append(employeePosition);
         sb.append(", employeeShop=").append(employeeShop);
+        sb.append(", employeePwd=").append(employeePwd);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

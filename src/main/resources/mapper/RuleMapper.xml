@@ -7,7 +7,7 @@
     <resultMap id="BaseResultMap" type="com.lwj.schedule.entity.Rule">
             <result property="ruleType" column="Rule_type" jdbcType="VARCHAR"/>
             <result property="ruleShop" column="Rule_shop" jdbcType="VARCHAR"/>
-            <result property="ruleValue" column="Rule_value" jdbcType="VARCHAR"/>
+            <result property="ruleValue" column="Rule_value" jdbcType="OTHER"/>
     </resultMap>
 
     <sql id="Base_Column_List">

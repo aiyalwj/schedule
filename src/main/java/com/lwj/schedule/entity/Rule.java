@@ -28,7 +28,7 @@ public class Rule implements Serializable {
      * 规则值
      */
     @TableField(value = "Rule_value")
-    private String ruleValue;
+    private Object ruleValue;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
@@ -64,14 +64,14 @@ public class Rule implements Serializable {
     /**
      * 规则值
      */
-    public String getRuleValue() {
+    public Object getRuleValue() {
         return ruleValue;
     }
 
     /**
      * 规则值
      */
-    public void setRuleValue(String ruleValue) {
+    public void setRuleValue(Object ruleValue) {
         this.ruleValue = ruleValue;
     }
 
