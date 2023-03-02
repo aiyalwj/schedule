@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
-@Api(value = "员工偏好管理")
+@Api(tags = "员工偏好管理")
 @RequestMapping("/Employeeprefer_Management")
 public class EmployeepreferencesController {
     @Autowired

@@ -39,6 +39,11 @@
         where Employee_name like concat('%', #{name}, '%')
     </select>
 
+    <update id="modifyEmployeeById">
+        update Employee
+        set Employee_name = #{name} and Employee_mail = #{mail} and Employee_position = #{position} and Employee_shop = #{shop} and Employee_pwd = #{pwd}
+        where Employee_id = #{id}
+    </update>
     <delete id="deleteEmployeeById">
         delete from Employee
         where Employee_id = #{id}

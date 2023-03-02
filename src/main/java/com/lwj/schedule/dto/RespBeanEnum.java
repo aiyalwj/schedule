@@ -8,30 +8,65 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public enum RespBeanEnum {
-    //成功
+    /**
+     * 成功
+     */
     SUCCESS(200,"成功","success"),
 
-    //错误
+    /**
+     * 失败
+     */
     ERROR(500,"错误","error"),
 
-    //用户名 密码 输入为空
+    /**
+     * id 密码 输入为空
+     */
     LOGIN_INPUT_EMPTY(4001,"请输入账号和密码！","warning"),
 
-    //账号 输入错误 没有找到
-    USER_ACCOUNT_NOT_FOUND(4002,"该用户不存在！","error"),
-    //美甲师账号 输入错误 没有找到
-    MANICURIST_ACCOUNT_NOT_FOUND(4012,"该美甲师不存在！","error"),
+    /**
+     * id为空
+     */
+    USER_ID_EMPTY(4002,"用户ID不能为空！","warning"),
 
-    //密码错误 登录错误
-    LOGIN_ERROR(4003,"账号密码输入错误！","error"),
+    /**
+     * name为空
+     */
+    USER_NAME_EMPTY(4003,"用户NAME不能为空！","warning"),
 
-    //用户账号account 不能为空
-    USER_ACCOUNT_EMPTY(4004,"用户账号不能为空！","warning"),
-    //美甲师账号account 不能为空
-    MANICURIST_ACCOUNT_EMPTY(4014,"美甲师账号不能为空！","warning");
+    /**
+     * id没有找到
+     */
+    USER_ID_NOT_FOUND(4004,"该用户ID不存在！","error"),
 
-    //电话信息 为空
-    //PHONE_INFO_EMPTY("5000","")
+    /**
+     * name没有找到
+     */
+    USER_NAME_NOT_FOUND(4005,"该用户NAME不存在！","error"),
+
+    /**
+     * 密码错误 登录错误
+     */
+    LOGIN_ERROR(4006,"账号密码输入错误！","error"),
+
+    /**
+     * 店id为空
+     */
+    SHOP_ID_EMPTY(4011,"店ID不能为空！","warning"),
+
+    SHOP_NAME_EMPTY(4012,"店NAME不能为空！","warning"),
+
+    /**
+     * 店id没有找到
+     */
+    SHOP_ID_NOT_FOUND(4013,"该店ID不存在！","error"),
+
+    /**
+     * 店name没有找到
+     */
+    SHOP_NAME_NOT_FOUND(4014,"该店NAME不存在！","error");
+
+
+
 
 
     private final Integer code;

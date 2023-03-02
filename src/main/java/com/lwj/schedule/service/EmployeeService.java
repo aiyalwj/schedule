@@ -13,4 +13,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface EmployeeService extends IService<Employee> {
 
     RespBean Login(String employee_id, String employee_pwd);
+
+    RespBean listAll();
+    RespBean searchById(String id);
+
+    RespBean searchByName(String name);
+
+    RespBean modifyById(String id,String name,String mail,String position,String shop,String pwd);
+
+    RespBean deleteById(String id);
 }

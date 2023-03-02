@@ -15,4 +15,34 @@
         Shop_Id,Shop_Name,Shop_Address,
         Shop_Size
     </sql>
+    <insert id="addShop">
+        insert into Shop(Shop_Id, Shop_Name, Shop_Address, Shop_Size)
+        values (#{shopId},#{shopName},#{shopAddress},#{shopSize})
+    </insert>
+
+
+    <select id="listAllShop" resultType="com.lwj.schedule.entity.Shop">
+        select *
+        from Shop
+    </select>
+    <select id="listShopById" resultType="com.lwj.schedule.entity.Shop">
+        select *
+        from Shop
+        where Shop_Id = #{id}
+    </select>
+    <select id="listShopByName" resultType="com.lwj.schedule.entity.Shop">
+        select *
+        from Shop
+        where Shop_Name like concat('%', #{name}, '%')
+    </select>
+
+    <update id="modifyShopById">
+        update Shop
+        set Shop_Name = #{name} and Shop_Address = #{address} and Shop_Size = #{size}
+        where Shop_Id = #{id}
+    </update>
+    <delete id="deleteShopById">
+        delete from Shop
+        where Shop_Id = #{id}
+    </delete>
 </mapper>
