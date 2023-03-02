@@ -33,9 +33,10 @@
         where Employee_id = #{id}
 #           and Employee_name like concat('%', #{name}, '%')
     </select>
-
-    <select id="listEmployeeById" resultType="com.lwj.schedule.entity.Employee">
-        select * from Employee where Employee_id = #{employee_id}
+    <select id="listEmployeeByName" resultType="com.lwj.schedule.entity.Employee">
+        select *
+        from Employee
+        where Employee_name like concat('%', #{name}, '%')
     </select>
 
     <delete id="deleteEmployeeById">
