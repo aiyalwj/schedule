@@ -3,6 +3,9 @@ package com.lwj.schedule.mapper;
 import com.lwj.schedule.entity.Employeepreferences;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
 * @author wz111
@@ -12,7 +15,15 @@ import org.apache.ibatis.annotations.Mapper;
 */
 @Mapper
 public interface EmployeepreferencesMapper extends BaseMapper<Employeepreferences> {
+    List<Employeepreferences> listEmployeepreferById(String employee_id);
 
+    List<Employeepreferences> listEmployeepreferByEPType(String EmployeePreferences_type);
+
+    void CreateEP(String employeePreferences_type, String employee_id, String employeePreferences_value);
+
+    void ModifyEP(String employeePreferences_type, String employee_id, String employeePreferences_value);
+
+    void DeleteEP(String employeePreferences_type, String employee_id);
 }
 
 

@@ -13,4 +13,23 @@
     <sql id="Base_Column_List">
         EmployeePreferences_type,Employee_id,EmployeePreferences_value
     </sql>
+    <insert id="CreateEP">
+        INSERT INTO EmployeePreferences VALUES(#{employeePreferences_type}, #{employee_id}, #{employeePreferences_value})
+    </insert>
+    <update id="ModifyEP">
+        UPDATE EmployeePreferences
+        SET EmployeePreferences_value = #{employeePreferences_value}
+        WHERE EmployeePreferences_type = #{employeePreferences_type} and Employee_id = #{employee_id}
+    </update>
+    <delete id="DeleteEP">
+        DELETE FROM EmployeePreferences
+        WHERE EmployeePreferences_type = #{employeePreferences_type} and Employee_id = #{employee_id}
+    </delete>
+    <select id="listEmployeepreferById" resultType="com.lwj.schedule.entity.Employeepreferences">
+        select * from EmployeePreferences where Employee_id = #{employee_id}
+    </select>
+    <select id="listEmployeepreferByEPType" resultType="com.lwj.schedule.entity.Employeepreferences">
+        select * from EmployeePreferences where EmployeePreferences_type = #{employeePreferences_type}
+    </select>
+
 </mapper>
