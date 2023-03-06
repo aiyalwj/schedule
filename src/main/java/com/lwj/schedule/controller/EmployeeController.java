@@ -27,6 +27,12 @@ public class EmployeeController {
         return employeeService.listAll();
     }
 
+    @ApiOperation(value = "增加员工")
+    @RequestMapping("/AddEmployee")
+    public RespBean addEmployee(@RequestParam("name") String name,@RequestParam("mail") String mail,@RequestParam("position") String position,@RequestParam("shop") String shop,@RequestParam("pwd") String pwd){
+        return employeeService.addEmployee(name,mail,position,shop,pwd);
+    }
+
     @ApiOperation(value = "员工查询（根据id）")
     @RequestMapping("/SerchById")
     public RespBean searchEmployeeById(@RequestParam("id") String id){

@@ -40,13 +40,13 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop>
         }
 
         String id = RandomUtils.generateTicket();
-        while(true){
-            if(shopMapper.listShopById(id)==null){
-                break;
-            }else{
-                id = RandomUtils.generateTicket();
-            }
-        }
+//        while(true){
+//            if(shopMapper.listShopById(id)==null){
+//                break;
+//            }else{
+//                id = RandomUtils.generateTicket();
+//            }
+//        }
 
         Shop shop = new Shop();
         shop.setShopId(id);

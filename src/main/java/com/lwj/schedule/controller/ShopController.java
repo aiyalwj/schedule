@@ -25,14 +25,20 @@ public class ShopController {
         return shopService.listAll();
     }
 
+    @ApiOperation(value = "增加门店")
+    @RequestMapping("/AddShop")
+    public RespBean addShop(@RequestParam("name") String name,@RequestParam("address") String address,@RequestParam("size") Double size){
+        return shopService.addShop(name, address, size);
+    }
+
     @ApiOperation(value = "门店查询（根据id）")
-    @RequestMapping("SearchById")
+    @RequestMapping("/SearchById")
     public RespBean searchShopById(@RequestParam("id") String id){
         return shopService.searchById(id);
     }
 
     @ApiOperation(value = "门店查询（根据name）")
-    @RequestMapping("SearchByName")
+    @RequestMapping("/SearchByName")
     public RespBean searchShopByName(@RequestParam("name") String name){
         return shopService.searchByName(name);
     }
