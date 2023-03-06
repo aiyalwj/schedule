@@ -18,8 +18,8 @@
         Employee_position,Employee_shop,Employee_pwd
     </sql>
     <insert id="addEmployee">
-        insert into Employee(Employee_id, Employee_name, Employee_mail, Employee_position, Employee_shop)
-        values (#{employeeId},#{employeeName},#{employeeMail},#{employeePosition},#{employeeShop})
+        insert into Employee(Employee_id, Employee_name, Employee_mail, Employee_position, Employee_shop,Employee_pwd)
+        values (#{employeeId},#{employeeName},#{employeeMail},#{employeePosition},#{employeeShop},#{employeePwd})
     </insert>
 
     <select id="listAllEmployee" resultType="com.lwj.schedule.entity.Employee">
@@ -31,8 +31,14 @@
         select *
         from Employee
         where Employee_id = #{id}
-#           and Employee_name like concat('%', #{name}, '%')
     </select>
+
+    <select id="listEmployeeByMail" resultType="com.lwj.schedule.entity.Employee">
+        select *
+        from Employee
+        where Employee_mail = #{mail}
+    </select>
+
     <select id="listEmployeeByName" resultType="com.lwj.schedule.entity.Employee">
         select *
         from Employee
@@ -41,9 +47,10 @@
 
     <update id="modifyEmployeeById">
         update Employee
-        set Employee_name = #{name} and Employee_mail = #{mail} and Employee_position = #{position} and Employee_shop = #{shop} and Employee_pwd = #{pwd}
+        set Employee_name = #{name} , Employee_mail = #{mail} , Employee_position = #{position} , Employee_shop = #{shop} , Employee_pwd = #{pwd}
         where Employee_id = #{id}
     </update>
+
     <delete id="deleteEmployeeById">
         delete from Employee
         where Employee_id = #{id}

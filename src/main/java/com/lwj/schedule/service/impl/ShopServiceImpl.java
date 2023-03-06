@@ -7,6 +7,7 @@ import com.lwj.schedule.entity.Employee;
 import com.lwj.schedule.entity.Shop;
 import com.lwj.schedule.service.ShopService;
 import com.lwj.schedule.mapper.ShopMapper;
+import com.lwj.schedule.utils.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,38 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop>
 
     @Autowired
     private ShopMapper shopMapper;
+
+    @Override
+    @Transactional
+    public RespBean addShop(String name, String address, Double size) {
+        if(name == "" || name ==null){
+            return RespBean.error(RespBeanEnum.SHOP_NAME_EMPTY);
+        }
+        if(address == "" || address ==null){
+            return RespBean.error(RespBeanEnum.SHOP_ADDRESS_EMPTY);
+        }
+        if(size == 0 || size ==null){
+            return RespBean.error(RespBeanEnum.SHOP_SIZE_EMPTY);
+        }
+
+        String id = RandomUtils.generateTicket();
+        while(true){
+            if(shopMapper.listShopById(id)==null){
+                break;
+            }else{
+                id = RandomUtils.generateTicket();
+            }
+        }
+
+        Shop shop = new Shop();
+        shop.setShopId(id);
+        shop.setShopName(name);
+        shop.setShopAddress(address);
+        shop.setShopSize(size);
+        shopMapper.addShop(shop);
+        return RespBean.success(shop);
+
+    }
 
     @Override
     @Transactional
@@ -64,7 +97,7 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop>
 
     @Override
     @Transactional
-    public RespBean modifyById(String id, String name, String address, String size) {
+    public RespBean modifyById(String id, String name, String address, Double size) {
         if(id.equals("")||id == null){
             return RespBean.error(RespBeanEnum.SHOP_ID_EMPTY);
         }

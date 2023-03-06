@@ -11,13 +11,15 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 
 public interface ShopService extends IService<Shop> {
+
+    RespBean addShop(String name,String address,Double size);
     RespBean listAll();
 
     RespBean searchById(String id);
 
     RespBean searchByName(String name);
 
-    RespBean modifyById(String id, String name, String address, String size);
+    RespBean modifyById(String id, String name, String address, Double size);
 
     RespBean deleteById(String id);
 

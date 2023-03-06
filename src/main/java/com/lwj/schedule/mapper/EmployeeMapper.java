@@ -19,7 +19,8 @@ public interface EmployeeMapper extends BaseMapper<Employee> {
 
     List<Employee> listAllEmployee();
 
-    Employee listEmployeeById(@Param("id") String Id);
+    Employee listEmployeeById(@Param("id") String id);
+    Employee listEmployeeByMail(@Param("mail") String mail);
     List<Employee> listEmployeeByName(@Param("name") String name);
 
     void modifyEmployeeById(@Param("id") String id,@Param("name") String name,@Param("mail") String mail,@Param("position") String position,@Param("shop") String shop,@Param("pwd") String pwd);
