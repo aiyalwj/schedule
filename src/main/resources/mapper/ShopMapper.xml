@@ -38,7 +38,7 @@
 
     <update id="modifyShopById">
         update Shop
-        set Shop_Name = #{name} and Shop_Address = #{address} and Shop_Size = #{size}
+        set Shop_Name = #{name} ,Shop_Address = #{address} , Shop_Size = #{size}
         where Shop_Id = #{id}
     </update>
     <delete id="deleteShopById">

@@ -8,6 +8,7 @@ import com.lwj.schedule.dto.RespBeanEnum;
 import com.lwj.schedule.entity.Employee;
 import com.lwj.schedule.service.EmployeeService;
 import com.lwj.schedule.mapper.EmployeeMapper;
+import com.lwj.schedule.utils.RandomUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
@@ -39,7 +40,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee>
 
         //用户不存在
         if(employee == null){
-            return RespBean.error(RespBeanEnum.USER_ID_NOT_FOUND);
+            return RespBean.error(RespBeanEnum.EMP_ID_NOT_FOUND);
         }
 
         //加密
@@ -47,6 +48,53 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee>
         if(!employee_pwd.equals(employee.getEmployeePwd())) {
             return RespBean.error(RespBeanEnum.LOGIN_ERROR);
         }
+        return RespBean.success(employee);
+    }
+
+    @Override
+    @Transactional
+    public RespBean addEmployee(String name, String mail, String position, String shop, String pwd) {
+        if(name == "" || name ==null){
+            return RespBean.error(RespBeanEnum.EMP_NAME_EMPTY);
+        }
+        if(mail == "" || mail == null){
+            return RespBean.error(RespBeanEnum.EMP_MAIL_EMPTY);
+        }
+        if(position == "" || position ==null){
+            return RespBean.error(RespBeanEnum.EMP_POSITION_EMPTY);
+        }
+        if(shop == "" || shop ==null){
+            return RespBean.error(RespBeanEnum.EMP_SHOP_EMPTY);
+        }
+        if(pwd == "" || pwd ==null){
+            return RespBean.error(RespBeanEnum.EMP_PWD_EMPTY);
+        }
+        if(employeeMapper.listEmployeeByMail(mail) != null){
+            return RespBean.error(RespBeanEnum.EMP_MAIL_EXIST);
+        }
+        String id = RandomUtils.generateTicket();
+//        while(true){
+//            if(employeeMapper.listEmployeeById(id)==null){
+//                break;
+//            }else{
+//                id = RandomUtils.generateTicket();
+//            }
+//        }
+
+        Employee employee = new Employee();
+        employee.setEmployeeId(id);
+        employee.setEmployeeName(name);
+        employee.setEmployeeMail(mail);
+        employee.setEmployeePosition(position);
+        employee.setEmployeeShop(shop);
+        employee.setEmployeePwd(pwd);
+        employeeMapper.addEmployee(employee);
+//        try{
+//            employeeMapper.addEmployee(employee);
+//        }catch (Exception e){
+//            return RespBean.error(RespBeanEnum.EMP_MAIL_EXIST);
+//        }
+
         return RespBean.success(employee);
     }
 
@@ -62,12 +110,12 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee>
     @Transactional
     public RespBean searchById(String id) {
         if(id.equals("")||id == null){
-            return RespBean.error(RespBeanEnum.USER_ID_EMPTY);
+            return RespBean.error(RespBeanEnum.EMP_ID_EMPTY);
         }
         Employee employee = employeeMapper.listEmployeeById(id);
 
         if(employee == null){
-            return RespBean.error(RespBeanEnum.USER_ID_NOT_FOUND);
+            return RespBean.error(RespBeanEnum.EMP_ID_NOT_FOUND);
         }
 
         return RespBean.success(employee);
@@ -77,12 +125,12 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee>
     @Transactional
     public RespBean searchByName(String name) {
         if(name.equals("")||name == null){
-            return RespBean.error(RespBeanEnum.USER_NAME_EMPTY);
+            return RespBean.error(RespBeanEnum.EMP_NAME_EMPTY);
         }
         List<Employee> employeeList = employeeMapper.listEmployeeByName(name);
 
         if(employeeList == null){
-            return RespBean.error(RespBeanEnum.USER_NAME_NOT_FOUND);
+            return RespBean.error(RespBeanEnum.EMP_NAME_NOT_FOUND);
         }
 
         return RespBean.success(employeeList);
@@ -92,7 +140,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee>
     @Transactional
     public RespBean modifyById(String id,String name,String mail,String position,String shop,String pwd) {
         if(id.equals("")||id == null){
-            return RespBean.error(RespBeanEnum.USER_ID_EMPTY);
+            return RespBean.error(RespBeanEnum.EMP_ID_EMPTY);
         }
 
         employeeMapper.modifyEmployeeById(id,name,mail,position,shop,pwd);
@@ -105,12 +153,12 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee>
     public RespBean deleteById(String id) {
 
         if(id.equals("")||id == null){
-            return RespBean.error(RespBeanEnum.USER_ID_EMPTY);
+            return RespBean.error(RespBeanEnum.EMP_ID_EMPTY);
         }
 
         Employee employee = employeeMapper.listEmployeeById(id);
         if(employee == null){
-            return RespBean.error(RespBeanEnum.USER_ID_NOT_FOUND);
+            return RespBean.error(RespBeanEnum.EMP_ID_NOT_FOUND);
         }
 
         employeeMapper.deleteEmployeeById(id);

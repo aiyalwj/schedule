@@ -14,6 +14,7 @@ public interface EmployeeService extends IService<Employee> {
 
     RespBean Login(String employee_id, String employee_pwd);
 
+    RespBean addEmployee(String name,String mail,String position,String shop,String pwd);
     RespBean listAll();
     RespBean searchById(String id);
 

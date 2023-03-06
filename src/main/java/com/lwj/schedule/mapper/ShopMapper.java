@@ -23,7 +23,7 @@ public interface ShopMapper extends BaseMapper<Shop> {
 
     List<Shop> listShopByName(@Param("name") String name);
 
-    void modifyShopById(@Param("id") String id,@Param("name") String name,@Param("address") String address,@Param("size") String size);
+    void modifyShopById(@Param("id") String id,@Param("name") String name,@Param("address") String address,@Param("size") Double size);
 
     void deleteShopById(@Param("id") String id);
 }

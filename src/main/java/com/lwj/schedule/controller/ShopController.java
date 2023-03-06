@@ -39,7 +39,7 @@ public class ShopController {
 
     @ApiOperation(value = "修改门店")
     @RequestMapping("/ModifyShop")
-    public RespBean modifyShop(@RequestParam("id") String id, @RequestParam("name") String name, @RequestParam("address") String address, @RequestParam("size") String size){
+    public RespBean modifyShop(@RequestParam("id") String id, @RequestParam("name") String name, @RequestParam("address") String address, @RequestParam("size") Double size){
         return shopService.modifyById(id, name, address, size);
     }
 
