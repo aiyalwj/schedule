@@ -1,5 +1,6 @@
 package com.lwj.schedule.service;
 
+import com.lwj.schedule.dto.RespBean;
 import com.lwj.schedule.entity.Rule;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -10,4 +11,17 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface RuleService extends IService<Rule> {
 
+    RespBean listAll();
+
+    RespBean SearchByRules(String rule_type, String rule_shop);
+
+    RespBean SearchByType(String rule_type);
+
+    RespBean SearchByShop(String rule_shop);
+
+    RespBean CreateRules(String rule_type, String rule_shop, Object rule_value);
+
+    RespBean DeleteRules(String rule_type, String rule_shop);
+
+    RespBean ModifyRules(String rule_type, String rule_shop, Object rule_value);
 }

@@ -13,4 +13,28 @@
     <sql id="Base_Column_List">
         Rule_type,Rule_shop,Rule_value
     </sql>
+    <insert id="CreateRules">
+        INSERT INTO Rule VALUES(#{rule_type}, #{rule_shop}, #{rule_value})
+    </insert>
+    <update id="ModifyRules">
+        UPDATE Rule
+        SET Rule_value = #{rule_value}
+        WHERE Rule_type = #{rule_type} and Rule_shop = #{rule_shop}
+    </update>
+    <delete id="DeleteRules">
+        DELETE FROM Rule
+        WHERE Rule_type = #{rule_type} and Rule_shop = #{rule_shop}
+    </delete>
+    <select id="listAllRules" resultType="com.lwj.schedule.entity.Rule">
+        select * from Rule
+    </select>
+    <select id="SearchByRules" resultType="com.lwj.schedule.entity.Rule">
+        select * from Rule where Rule_type = #{rule_type} and Rule_shop = #{rule_shop}
+    </select>
+    <select id="SearchByType" resultType="com.lwj.schedule.entity.Rule">
+        select * from Rule where Rule_type = #{rule_type}
+    </select>
+    <select id="SearchByShop" resultType="com.lwj.schedule.entity.Rule">
+        select * from Rule where Rule_shop = #{rule_shop}
+    </select>
 </mapper>
