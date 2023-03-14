@@ -6,10 +6,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -20,37 +17,37 @@ public class ShopController {
     private ShopService shopService;
 
     @ApiOperation(value = "列出所有的门店")
-    @GetMapping
+    @GetMapping()
     public RespBean listAllShop(){
         return shopService.listAll();
     }
 
     @ApiOperation(value = "增加门店")
-    @RequestMapping("/AddShop")
+    @PostMapping("/AddShop")
     public RespBean addShop(@RequestParam("name") String name,@RequestParam("address") String address,@RequestParam("size") Double size){
         return shopService.addShop(name, address, size);
     }
 
     @ApiOperation(value = "门店查询（根据id）")
-    @RequestMapping("/SearchById")
+    @GetMapping("/SearchById")
     public RespBean searchShopById(@RequestParam("id") String id){
         return shopService.searchById(id);
     }
 
     @ApiOperation(value = "门店查询（根据name）")
-    @RequestMapping("/SearchByName")
+    @PostMapping("/SearchByName")
     public RespBean searchShopByName(@RequestParam("name") String name){
         return shopService.searchByName(name);
     }
 
     @ApiOperation(value = "修改门店")
-    @RequestMapping("/ModifyShop")
+    @PostMapping("/ModifyShop")
     public RespBean modifyShop(@RequestParam("id") String id, @RequestParam("name") String name, @RequestParam("address") String address, @RequestParam("size") Double size){
         return shopService.modifyById(id, name, address, size);
     }
 
     @ApiOperation(value = "删除门店")
-    @RequestMapping("/DeleteShop")
+    @PostMapping("/DeleteShop")
     public RespBean deleteEmployee(@RequestParam("id") String id){
         return shopService.deleteById(id);
     }

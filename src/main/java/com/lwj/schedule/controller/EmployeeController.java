@@ -8,10 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -22,37 +19,37 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @ApiOperation(value = "列出所有员工")
-    @GetMapping
+    @GetMapping()
     public RespBean listAllEmployee(){
         return employeeService.listAll();
     }
 
     @ApiOperation(value = "增加员工")
-    @RequestMapping("/AddEmployee")
+    @PostMapping("/AddEmployee")
     public RespBean addEmployee(@RequestParam("name") String name,@RequestParam("mail") String mail,@RequestParam("position") String position,@RequestParam("shop") String shop,@RequestParam("pwd") String pwd){
         return employeeService.addEmployee(name,mail,position,shop,pwd);
     }
 
     @ApiOperation(value = "员工查询（根据id）")
-    @RequestMapping("/SerchById")
+    @GetMapping("/SerchById")
     public RespBean searchEmployeeById(@RequestParam("id") String id){
         return employeeService.searchById(id);
     }
 
     @ApiOperation(value = "员工查询（根据name）")
-    @RequestMapping("/SerchByName")
+    @PostMapping("/SerchByName")
     public RespBean searchEmployeeByName(@RequestParam("name") String name){
         return employeeService.searchByName(name);
     }
 
     @ApiOperation(value = "修改员工")
-    @RequestMapping("/ModifyEmployee")
+    @PostMapping("/ModifyEmployee")
     public RespBean modifyEmployee(@RequestParam("id") String id, @RequestParam("name") String name, @RequestParam("mail") String mail, @RequestParam("position") String position, @RequestParam("shop") String shop, @RequestParam("pwd") String pwd){
         return employeeService.modifyById(id, name, mail, position, shop, pwd);
     }
 
     @ApiOperation(value = "删除员工")
-    @RequestMapping("/DeleteEmployee")
+    @PostMapping("/DeleteEmployee")
     public RespBean deleteEmployee(@RequestParam("id") String id){
         return employeeService.deleteById(id);
     }
