@@ -47,7 +47,6 @@
     <orderEntry type="library" name="Maven: org.apache.tomcat.embed:tomcat-embed-el:9.0.60" level="project" />
     <orderEntry type="library" name="Maven: org.apache.tomcat.embed:tomcat-embed-websocket:9.0.60" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-web:5.3.17" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-beans:5.3.17" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:5.3.17" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aop:5.3.17" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:5.3.17" level="project" />
@@ -118,5 +117,6 @@
     <orderEntry type="library" name="Maven: org.mapstruct:mapstruct:1.2.0.Final" level="project" />
     <orderEntry type="library" name="Maven: io.springfox:springfox-swagger-ui:2.9.2" level="project" />
     <orderEntry type="library" name="Maven: log4j:log4j:1.2.17" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-beans:5.3.17" level="project" />
   </component>
 </module>
