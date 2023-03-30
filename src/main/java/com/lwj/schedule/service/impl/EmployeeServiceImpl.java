@@ -2,16 +2,15 @@ package com.lwj.schedule.service.impl;
 
 //import net.sf.json.JSONArray;
 //import net.sf.json.JSONObject;
+
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lwj.schedule.dto.RespBean;
 import com.lwj.schedule.dto.RespBeanEnum;
 import com.lwj.schedule.entity.Employee;
-import com.lwj.schedule.service.EmployeeService;
 import com.lwj.schedule.mapper.EmployeeMapper;
+import com.lwj.schedule.service.EmployeeService;
 import com.lwj.schedule.utils.RandomUtils;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -142,8 +141,15 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee>
         if(id.equals("")||id == null){
             return RespBean.error(RespBeanEnum.EMP_ID_EMPTY);
         }
+        List<Employee> mailList = employeeMapper.listEmployeeByMail(mail);
+        if(mailList.size() > 1){//改过的邮箱跟已有的冲突
+            return RespBean.error(RespBeanEnum.EMP_MAIL_EXIST);
+        }else if (mailList.size() == 1){//邮箱跟原来一样
+            employeeMapper.modifyEmployeeByIdExceptMail(id,name,position,shop,pwd);
+        }else {
+            employeeMapper.modifyEmployeeById(id, name, mail, position, shop, pwd);
+        }
 
-        employeeMapper.modifyEmployeeById(id,name,mail,position,shop,pwd);
 
         return RespBean.success();
     }
@@ -163,6 +169,16 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee>
 
         employeeMapper.deleteEmployeeById(id);
         return RespBean.success();
+    }
+
+    @Override
+    @Transactional
+    public RespBean listEmployeeBySameshop(String shop) {
+        List<Employee> employeesameShopList = employeeMapper.listEmployeeBySameShop(shop);
+        if(employeesameShopList == null){
+            return RespBean.error(RespBeanEnum.SHOP_ID_NOT_FOUND);
+        }
+        return RespBean.success(employeesameShopList);
     }
 }
 

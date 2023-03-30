@@ -23,4 +23,6 @@ public interface EmployeeService extends IService<Employee> {
     RespBean modifyById(String id,String name,String mail,String position,String shop,String pwd);
 
     RespBean deleteById(String id);
+
+    RespBean listEmployeeBySameshop(String shop);
 }

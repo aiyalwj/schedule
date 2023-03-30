@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
-@Api(tags = "排版规则管理")
+@Api(tags = "排班规则管理")
 @RequestMapping("/Rule_Manager")
 public class RuleController {
     @Autowired
@@ -20,6 +20,7 @@ public class RuleController {
 
     @ApiOperation(value = "列出所有规则")
     @GetMapping()
+//    @ResponseBody
     public RespBean listAllRules(){
         return ruleService.listAll();
     }
@@ -37,7 +38,9 @@ public class RuleController {
 
     @ApiOperation(value = "创建规则")
     @PostMapping("/CreateRules")
+//    @ResponseBody
     public RespBean CreateRules(@RequestParam("Rule_type") String Rule_type, @RequestParam("Rule_shop") String Rule_shop, @RequestParam("Rule_value") Object Rule_value){
+//    public RespBean CreateRules(@RequestParam("Rule_type") String Rule_type, @RequestParam("Rule_shop") String Rule_shop, @RequestBody Object Rule_value){
         return ruleService.CreateRules(Rule_type, Rule_shop, Rule_value);
     }
 
