@@ -20,6 +20,7 @@ public class Store {
     //预计客流模型
     private ArrayList<Double> PreModle;
 
+    // group数组的作用是记录每个员工在每个时间片是否上班
     ArrayList<Chromo> group;
 
     //黑箱数据设定字段，这些规则由添加店的时候设置
@@ -126,6 +127,7 @@ public class Store {
 
 
         ga_group.setLen(len);
+//        这里的有参构造函数的setSize会把公司里的所有员工数量设为可上班员工数量
         ga_group.setSize(stuffs.size());
     }
 
@@ -170,9 +172,10 @@ public class Store {
         }
     }
 
-    //调用GA算法排班
+    //调用GA算法排班，其实这个Store类的作用也是做一些数据准备，计算上班前上班中下班后需要的人数，
+    // 计算每个时间片中需要的员工数目，重新设置一天中时间片的长度和实例化Chromo，并将加进来的员工偏好做成可以调用使用的数据结构
     public void use_GA(int Day) {//需要把客流预测也输入给Store
-        //员工chromo初始化
+//员工chromo初始化
         int pre = (int) (preWorkTime / 0.5);
         int later = (int) (aftWorkTime / 0.5);
 //        这里的len为一天中所分的时间片个数，工作时间12小时 x 2 + pre + later(半小时为一个时间片)
@@ -226,14 +229,14 @@ public class Store {
         PreModle.add(1.0);
         //一天的预测，一个月就重复调用就行了，都是一样的数据！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
 
-        //计算需要人数
+        //计算需要人数，PreNum为上班前需要打扫卫生的人数，FreeNum为没人时至少有几个员工要值班，AftNum为下班后有几个人要打扫卫生
         int PreNum = (int) Math.abs((size / StoreSizeNeedBefore));
         int FreeNum = (int) (free_population);
         int AftNum = ((int) (size / StoreSizeNeedAfter1) + StoreSizeNeedAfter2) + 1;
 
-//        PreModle存储了一天中各个时间的客流量
+//        PreModle存储了一天中各个时间片的客流量
         ArrayList<Double> PassFlowNum = new ArrayList<>();
-        for (double tmp : PreModle) {// 对各个时间段的客流量进行需要人数的计算并把人数放到数组里
+        for (double tmp : PreModle) {// 对各个时间段的客流量进行需要人数的计算并把人数放到数组PassFlowNum里
             PassFlowNum.add((tmp) / passengerFlowNeed);
         }
         /*
@@ -254,6 +257,7 @@ public class Store {
         }
 
         //开始公式计算并传参进行GA,完成排班
+//        最终每一天每个员工是否进行排班的记录存在group里面
         group = ga_group.GA(PreNum, FreeNum, AftNum, PassFlowNum, pre, later,Day,loves_arr);
     }
 
@@ -261,6 +265,7 @@ public class Store {
     /**
      * 用于显示时间
      */
+//    搞不懂这个decode的作用是什么
     public void decode()
     {
         int pre = (int) (preWorkTime / 0.5);

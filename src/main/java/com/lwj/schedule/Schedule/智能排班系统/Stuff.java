@@ -68,8 +68,8 @@ public class Stuff {
         System.out.println(loves.charAt(5)+"5");
         System.out.println(loves.charAt(6)+"6");*/
         if(loves.charAt(2)=='日'){// 工作日偏好，1，3，4，7
-            love_arr.set(0,1);
-            for(int i=6;i<loves.length();i++) {
+            love_arr.set(0,1);//love_arr数组第一个位置（0下标）为1，代表设为工作日偏好
+            for(int i=6;i<loves.length();i++) {//如果是日工作时间偏好，那么就把对应的时间设为可工作时间
                 if(loves.charAt(i)=='1') love_arr.set(1,1);//0则check为休息
                 if(loves.charAt(i)=='2') love_arr.set(2,1);//0则check为休息
                 if(loves.charAt(i)=='3') love_arr.set(3,1);//0则check为休息
@@ -81,19 +81,21 @@ public class Stuff {
         }
         //工作时间偏好 10:00-21:00(范围)
         else if(loves.charAt(2)=='时') {
-            love_arr.set(0,2);
+            love_arr.set(0,2);//设为工作时间偏好
+
+//            这里的两个时间应该工作时间偏好的开始时间
             char ch1 = loves.charAt(7);
             char ch2 = loves.charAt(8);
             int i = ch1-'0';
             int j = ch2-'0';
-            int res = i*10+j;
-            if(loves.charAt(10)=='3') {
+            int res = i*10+j;// 如果是偏好是12：00的话就是，（“1”-“0” ）*10 + “2”—“0”
+            if(loves.charAt(10)=='3') {//如果是点半这种，比如12：30
                 love_arr.set((res - 9) * 2 + 8 , 1);
                 System.out.println();
             }
             else love_arr.set((res-9)*2+7,1);
 
-
+//          这里的两个时间是结束时间
             ch1 = loves.charAt(13);
             ch2 = loves.charAt(14);
             i = ch1-'0';
@@ -116,7 +118,7 @@ public class Stuff {
             }
         }
         else if(loves.charAt(2)=='作') {// 日工作时间偏好，7小时
-            love_arr.set(0,3);
+            love_arr.set(0,3);//设为日工作时间偏好
             int z = loves.charAt(8)-'0';//不能超过8小时
             love_arr.set(32,z*2);
         }

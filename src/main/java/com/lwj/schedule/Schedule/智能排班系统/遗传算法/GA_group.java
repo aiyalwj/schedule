@@ -28,6 +28,7 @@ public class GA_group {
     //③没有客流的时候 至少d人员值班
     //④关门后需要e小时收尾 门店买诺记/f + g = 人数
 
+//    这里的group和Store中定义了一样的数据结构的group
     public ArrayList<Chromo> group;//种群，染色体集
     //动态数组记录状态
     public ArrayList<ArrayList<Integer>> check;//check表示员工一天的那么多个时间片中是否在工作
@@ -57,7 +58,9 @@ public class GA_group {
      */
     private int countPopulations(int index) {
         int res=0;
+//        Size为可上班的人数，为所有员工数量
         for(int i=0;i<Size;i++) {
+//            可上班的人数Size一定就是group里前Size个人吗？
             if(group.get(i).chromo.get(index)==1) res++;
         }
         return res;//多少个人
@@ -93,27 +96,31 @@ public class GA_group {
         return res;//多少个人
     }
 
+    //PreNum为上班前需要的人数，FreeNum为没人时至少需要几人值班，PassFlowNum为各个时间片需要的员工数量，pre为上班前的时间片数目，而later为下班后的时间片数目，day为一周中的第几天，loves_arr为员工的偏好
     private boolean fitness(int PreNum,int FreeNum,int AftNum,ArrayList<Double> PassFlowNum,int pre,int later,ArrayList<ArrayList<Integer>> loves_arr) {
         //如果现在len是28，代表 pre 24 later的一个时间构造，解析上班时间的时候，就需要传上下班这个参数来确定
 
         Random r = new Random();
-// group变量是包含了所有员工一天的时间片列表合集
+        // group变量是包含了所有员工一天的时间片列表合集
         for(int i=0;i<group.size();i++)
         {
             Chromo tmp=group.get(i);
             for(int j=0;j<len;j++)
             {
+//              将所有员工的每个时间片都初始化设为不在工作
                 tmp.chromo.set(j,0);
             }
             group.set(i,tmp);
         }
         //每次排班重置group，不然都是一样的
 
+//        如果上班前打扫为生的人不够，那就一直变异，直到人数够为止
         while(countPopulations(0)!=PreNum) {//PreNum个人工作前打扫
             mutate(0);//变异第一列
         }
 
         //需参数设置初始化
+//        下面这个循环没懂是什么意思，pre为上班前的时间片数目
         for(int i=1;i<pre;i++) {
            for(int j=0;j<Size;j++) {
                 Chromo tmp = group.get(j);
@@ -149,8 +156,8 @@ public class GA_group {
         for(int i=pre;i<len;i++) {
             //ran++;
             double PopulationsNeed = 0;
-            if (i >= pre && i < len-later) PopulationsNeed = PassFlowNum.get(i-pre);
-            else if (i >= len-later) PopulationsNeed = AftNum;
+            if (i >= pre && i < len-later) PopulationsNeed = PassFlowNum.get(i-pre);//如果是在正常上班的时间段
+            else if (i >= len-later) PopulationsNeed = AftNum;//如果是在下班后的那个时间段的话
 
             if((int)PopulationsNeed==0) PopulationsNeed =FreeNum;//没有人时需要1人
 
@@ -162,12 +169,13 @@ public class GA_group {
 
             //正常休息
             for (int j = 0; j < Size; j++) {//j是人，i是位点
-                if (persistentTime(j) >= 8) {
+                if (persistentTime(j) >= 8) {//如果一个员工连续工作时间超过了4小时，由于每个小时两个时间片，那么四小时就是8个时间片
                     ArrayList<Integer> tmp = check.get(j);
                     tmp.set(i, 1);//确认
-                    if(i+1<Size)
+                    if(i+1<Size)//如果后面的一个员工也是可以上班的员工，那么也确认ta的状态，之后将ta设为休息中
                     tmp.set(i + 1, 1);
                     check.set(j, tmp);
+
                     tmp = status.get(j);
                     tmp.set(i, 3);//休息中
                     if(i+1<Size)
@@ -175,12 +183,16 @@ public class GA_group {
                     status.set(j, tmp);
                     resetPerTime(j);//重置这个人的连续工作时间
                 }//安排休息没问题
+//                lovers_arr中3为日工作时间偏好，loves_arr.get(j).get(32)为将日工作时间偏好取出来
+//                DayTime（j）为员工j的日工作时间
                 if ((DayTime(j) >= 16)||(loves_arr.get(j).get(0)==3&&DayTime(j)==loves_arr.get(j).get(32))) {
                     for (int k = i; k < len; k++) {
+//                下面这个判断是 如果一个人的日工作时间超过了八小时，那么就把剩余的时间都给他设置为休息
                         resetPerTime(j);
                         ArrayList<Integer> tmp = check.get(j);
                         tmp.set(k, 1);//确认
                         check.set(j, tmp);
+
                         tmp = status.get(j);
                         tmp.set(k, 3);//休息中
                         status.set(j, tmp);
@@ -209,22 +221,25 @@ public class GA_group {
 
 
             //首先是确定需要的人数
+//            PopulationsNeed为需要上班的人数，countPopulations（i）为第i个时间片上班的人数
             if(countPopulations(i-1)<=(int)Math.ceil(PopulationsNeed)){//还需要人上班，可以上的都上去
                 for(int j=0;j<Size;j++)
                 {//循环每一个
+//                    这里的分支条件我不明白什么意思
                     if(persistentTime(j)>0&&persistentTime(j)<8&&group.get(j).chromo.get(i-1)==1&&status.get(j).get(i)==1){//等待上班，并且可以上
+//                        将第j个人的工作状态设为上班
                         Chromo work = group.get(j);
                         work.chromo.set(i,1);
                         group.set(j,work);
-
+//                      确认上班
                         ArrayList<Integer> tmp = check.get(j);
-                        tmp.set(i,1);//确认上班
+                        tmp.set(i,1);
                         check.set(j,tmp);
-
+//                      上班中
                         tmp = status.get(j);
-                        tmp.set(i,2);//上班中
+                        tmp.set(i,2);
                         status.set(j,tmp);
-
+//                      工作时间按照各自的位置加上
                         tmp = workingTime.get(j);
                         tmp.set(0,persistentTime(j)+1);
                         tmp.set(1,DayTime(j)+1);
@@ -234,31 +249,38 @@ public class GA_group {
 
 
                 //还缺多少人，随机上
-                while((int)Math.ceil(PopulationsNeed)!=countPopulations(i)) {//人不够,随机选在wait的人上班,每次选一个
+                while((int)Math.ceil(PopulationsNeed)!=countPopulations(i)) {//人不够,随机选在wait的人上班,每次选一个，直到满足为止
                     System.out.println(countPopulations(i)+" "+(int)Math.ceil(PopulationsNeed)+" "+1);
                     int index = Math.abs(r.nextInt()%Size);
+//                    check为0表示未确认，status为1表示waiting，Daytime表示工作时间小于8小时
                     if(check.get(index).get(i)==0&&status.get(index).get(i)==1&&DayTime(index)<16)
                     {//满足要求，上班
+//                        对应时间片设为上班
                         Chromo work = group.get(index);
                         work.chromo.set(i,1);
                         group.set(index,work);
 
+//                      状态确认
                         ArrayList<Integer> tmp = check.get(index);
-                        tmp.set(i,1);//确认上班
+                        tmp.set(i,1);
                         check.set(index,tmp);
+
+//                      status设为上班状态
                         tmp = status.get(index);
                         tmp.set(i,2);//上班中
                         status.set(index,tmp);
+
+//                      对应工作时间都要加上
                         tmp = workingTime.get(index);
                         tmp.set(0,persistentTime(index)+1);
                         tmp.set(1,DayTime(index)+1);
                         workingTime.set(index,tmp);
                     }
                 }
-                //已凑上
+                //已凑上s
             }
-            //决定执行工作时长<2时就算人太多也不下班
-            else if(countPopulations(i-1)>(int)Math.ceil(PopulationsNeed)) {
+            //决定执行工作时长<2时就算人太多也不下班（难道这就是传说中的加班？？？）
+            else if(countPopulations(i-1)>(int)Math.ceil(PopulationsNeed)) {//如果能够上班的人数>实际需要的人数
                     for(int j=0;j<Size;j++)
                     {
                         if(group.get(j).chromo.get(i-1)==1&&persistentTime(j)<4&&persistentTime(j)>0)
@@ -284,18 +306,21 @@ public class GA_group {
                     while(countPopulations(i)<(int)Math.ceil(PopulationsNeed)) {
                         System.out.println(countPopulations(i)+" "+(int)Math.ceil(PopulationsNeed)+" "+2);
                         int index = Math.abs(r.nextInt()%Size);
+//                      check=0表示一天的排班中，还有员工没确认
                         if(check.get(index).get(i)==0&&status.get(index).get(i)==1&&DayTime(index)<16&&persistentTime(index)<8) {
                             //index上班，其他的下班(重置持续时间)
                             Chromo work = group.get(index);
                             work.chromo.set(i, 1);
                             group.set(index, work);
 
+//                          check确认
                             ArrayList<Integer> tmp = check.get(index);
-                            tmp.set(i, 1);//确认上班
+                            tmp.set(i, 1);
                             check.set(index, tmp);
 
+//                          确认上班状态
                             tmp = status.get(index);
-                            tmp.set(i, 2);//上班中
+                            tmp.set(i, 2);
                             status.set(index, tmp);
 
                             tmp = workingTime.get(index);
@@ -325,13 +350,14 @@ public class GA_group {
         Random r = new Random();
         for(int i=0;i<Size;i++) {//
             //System.out.println(i+" "+Size+" "+check.size()+" "+status.size());
+//            status=1代表waiting即准备上班，check代表每个时间片中是否在工作
             if(Math.abs(r.nextInt()%10000/10000.0)<pm&&check.get(i).get(pos)==0&&status.get(i).get(pos)==1){//未确认，在waiting才能变异上班,并且满足概率
-                if(group.get(i).chromo.get(pos)==0) {
+                if(group.get(i).chromo.get(pos)==0) {//这个分支设成要上班
                     Chromo chro = group.get(i);
                     chro.chromo.set(pos,1);
                     group.set(i,chro);
                 }
-                else{
+                else{//这个分支设成不要上班
                     Chromo chro = group.get(i);
                     chro.chromo.set(pos,0);
                     group.set(i,chro);
@@ -407,6 +433,7 @@ public class GA_group {
         /**
          * 初始化完了之后使用loves_arr进行check
          */
+//        下面这个大的for作用是确定今天不能排版的人，将ta们的状态（也就是status数组）设为不可以排班
         for(int a=0;a<loves_arr.size();a++)//a是偏好数组中一个人对应的编号
         {
             //每一个爱好数组
@@ -414,10 +441,12 @@ public class GA_group {
             if(loves_arr.get(a).get(0)==1){//工作日偏好
                 for(int i=1;i<7;i++) {
                     //i代表一周中的哪一天
+//                    love_arr.get(a).get(i)==0代表不是这一天的工作时间偏好，先把今天不能排班的人确定
                     if(loves_arr.get(a).get(i)==0&&((day%7)+1)==i) {
 //                        check是一个人一天中所有时间片的数组集合（0 1代表是否工作），status是一个人一天中所有时间片的状态的数组集合（1 2 3分别代表准备上班、上班中、休息中）
                         ArrayList<Integer> tmp1=check.get(a);
                         ArrayList<Integer> tmp2=status.get(a);
+                        //工作日偏好，那么就把这一天中的状态都确认且设为不可排班？
                         for(int j=0;j<tmp1.size();j++)
                         {
                             tmp1.set(j,1);
@@ -459,7 +488,7 @@ public class GA_group {
 
         //完成GA，显示结果
         System.out.println("Day"+day+"已完成排班，结果如下：");
-        for(int i=0;i<Size;i++)
+        for(int i=0;i<Size;i++)//Size其实就是全体员工的数量，这个for循环是输出全部员工一天的排班结果
         {
             System.out.println("员工"+i);
             for(int j=0;j<len;j++)
@@ -470,6 +499,7 @@ public class GA_group {
             System.out.println();
         }
         System.out.println("结果显示完成!!!");
+//        下面这两次几句代码就是将排完班的结果返回并将排班结果覆盖成没排班之前的状态
         groupTmp1=group;
         group=groupTmp2;
         return groupTmp1;
