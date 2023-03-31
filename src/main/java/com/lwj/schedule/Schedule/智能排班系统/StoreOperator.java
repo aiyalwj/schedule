@@ -8,7 +8,8 @@ import java.util.Scanner;
  */
 public class StoreOperator {
 
-    public static void allStoreInformation(HashMap<String,Store> newList) {//店铺表显示
+    //显示所有的店铺信息
+    public static void allStoreInformation(HashMap<String,Store> newList) {
         System.out.println("\n\n店铺表:");
         for(Store sto : newList.values()) {//强化for拿到Store
             sto.store_information();
@@ -19,7 +20,6 @@ public class StoreOperator {
         System.out.println();
         System.out.println();
     }
-
 
     //用店铺HashMap之前必须先初始化！！！
     public static HashMap<String,Store> store_arrInit() {
@@ -45,12 +45,9 @@ public class StoreOperator {
             StuffOperator.stuff_add(tmpStuffMap);
         }
         Store sto = new Store(name,address,size,tmpStuffMap);
-        ///////////////////////////////////////////////////////////////////////
-
 
 
         //开始规则设置,在Store中新添字段
-        /////////////////////////////////////////////////////////////////////
         System.out.println();
         System.out.println("请依次输入门店工作规则：");
         System.out.print("①请输入开门前准备时间（默认值为0.5,建议不要超过2）:");
@@ -99,8 +96,6 @@ public class StoreOperator {
         int StoreSizeNeedAfter2;
         StoreSizeNeedAfter2 = sc.nextInt();
         sto.setStoreSizeNeedAfter2(StoreSizeNeedAfter2);
-        //////////////////////////////////////////////////////////////////
-
 
         newList.put(sto.getName(),sto);
 
@@ -108,7 +103,7 @@ public class StoreOperator {
     }
 
     //根据名字搜索信息
-    public static void store_serchByName(HashMap<String, Store> newList) {
+    public static void store_searchByName(HashMap<String, Store> newList) {
         System.out.print("请输入你想查找的店铺名称:");
         Scanner sc = new Scanner(System.in);
         String name = sc.next();//名称

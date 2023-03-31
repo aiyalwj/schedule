@@ -17,8 +17,6 @@ public class StuffOperator {
         System.out.println();
     }
 
-
-
     //用员工HashMap之前必须先初始化！！！
     public static HashMap<String,Stuff> stuff_arrInit() {
         HashMap<String,Stuff> retList = new HashMap<>();

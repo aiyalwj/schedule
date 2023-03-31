@@ -28,7 +28,7 @@ public class Stuff {
     public Chromo chro;//暂时用一天的时间集染色体来进行GA
     //chromo调用构造函数初始化
 
-    //构造方法
+    //无参构造方法
     public Stuff() {
         this.name = "";
         this.pos = "";
@@ -40,13 +40,16 @@ public class Stuff {
 
     }
 
+//    有参构造方法
     public Stuff(String name, String pos, String tel, String mail, String stores, String loves) {
+
         this.name = name;
         this.pos = pos;
         this.tel = tel;
         this.mail = mail;
         this.stores = stores;
         this.loves = loves;
+
         /**
          * 工作日偏好 1、3、4、5、7
          * 工作时间偏好 9:30-21:30 9:00-21:00
@@ -60,6 +63,7 @@ public class Stuff {
             love_arr.add(0);
         }
 
+//        暂时没明白是什么作用
         /*System.out.println(loves.charAt(0)+"0");
         System.out.println(loves.charAt(1)+"1");
         System.out.println(loves.charAt(2)+"2");
@@ -67,7 +71,10 @@ public class Stuff {
         System.out.println(loves.charAt(4)+"4");
         System.out.println(loves.charAt(5)+"5");
         System.out.println(loves.charAt(6)+"6");*/
-        if(loves.charAt(2)=='日'){// 工作日偏好，1，3，4，7
+
+
+        // 工作日偏好，1，3，4，7
+        if(loves.charAt(2)=='日'){
             love_arr.set(0,1);//love_arr数组第一个位置（0下标）为1，代表设为工作日偏好
             for(int i=6;i<loves.length();i++) {//如果是日工作时间偏好，那么就把对应的时间设为可工作时间
                 if(loves.charAt(i)=='1') love_arr.set(1,1);//0则check为休息
@@ -79,6 +86,7 @@ public class Stuff {
                 if(loves.charAt(i)=='7') love_arr.set(7,1);//0则check为休息
             }
         }
+
         //工作时间偏好 10:00-21:00(范围)
         else if(loves.charAt(2)=='时') {
             love_arr.set(0,2);//设为工作时间偏好
@@ -117,12 +125,13 @@ public class Stuff {
                 }
             }
         }
-        else if(loves.charAt(2)=='作') {// 日工作时间偏好，7小时
+
+        // 日工作时间偏好，7小时
+        else if(loves.charAt(2)=='作') {
             love_arr.set(0,3);//设为日工作时间偏好
             int z = loves.charAt(8)-'0';//不能超过8小时
             love_arr.set(32,z*2);
         }
-
 
         System.out.print("该员工偏好数组：");
         for(int i=0;i<33;i++){
@@ -131,7 +140,6 @@ public class Stuff {
         System.out.println();
         chro=new Chromo();
     }
-
 
     //getter setter
     public String getName() {
@@ -189,9 +197,6 @@ public class Stuff {
     public void setCountDay(int countDay) {
         this.countDay = countDay;
     }
-
-
-
 
     //stuff中内置的显示方法
     public void stuff_information() {
