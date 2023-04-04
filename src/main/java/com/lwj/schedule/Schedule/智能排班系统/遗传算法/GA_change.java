@@ -1,10 +1,7 @@
 package com.lwj.schedule.Schedule.智能排班系统.遗传算法;
 
-import com.lwj.schedule.Schedule.智能排班系统.遗传算法.Chromo;
-import com.lwj.schedule.Schedule.智能排班系统.遗传算法.GA_group;
-
-import java.net.Inet4Address;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *使用说明：
@@ -12,7 +9,7 @@ import java.util.*;
  * ②group是一天内所有员工的时间染色体集，也就是种群，用于遗传
  * ③chromo是染色体
  */
-public class GA_group {
+public class GA_change {
     //规则是用来固定len和限制适应度函数fitness的
     //固定规则：
     //①周一~周五 9-21  12小时
@@ -51,7 +48,7 @@ public class GA_group {
         Size = size;
     }
 
-    public GA_group(ArrayList<Chromo> group) {
+    public GA_change(ArrayList<Chromo> group) {
         this.group = group;
     }//
 
