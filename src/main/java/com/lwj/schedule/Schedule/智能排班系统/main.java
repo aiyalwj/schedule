@@ -7,9 +7,6 @@ import java.util.*;
 public class main {
     public static void main(String[] args) {
 
-        /**
-         * GA算法测试
-         */
         System.out.println("智能排班系统欢迎你！");
         Scanner sc = new Scanner(System.in);
         //stuff_arr员工集合
@@ -79,20 +76,22 @@ public class main {
          */
 
 //        上面的代码都是在做初始化，初始化很多员工，初始化一个门店
-        int DAY1=7;//
-        for(int day=1;day<=DAY1;day++)
-        {
-            store1.use_GA(day);//哪天
-        }
+
+        store1.use_GA(1);//哪天
+//        int DAY1=7;//
+//        for(int day=1;day<=DAY1;day++)
+//        {
+//            store1.use_GA(day);//哪天
+//        }
 
         //用的是一天来排的班
 
-        StoreOperator.store_add(store_arr);//add出问题
-        int DAY2=30;
-        for(int day=1;day<=DAY2;day++)
-        {
-            store_arr.get("1").use_GA(day);
-        }
+//        StoreOperator.store_add(store_arr);//add出问题
+//        int DAY2=30;
+//        for(int day=1;day<=DAY2;day++)
+//        {
+//            store_arr.get("1").use_GA(day);
+//        }
 
 
 

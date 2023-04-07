@@ -9,7 +9,7 @@ import java.util.Random;
  * ②group是一天内所有员工的时间染色体集，也就是种群，用于遗传
  * ③chromo是染色体
  */
-public class GA_change {
+public class GA_changev3 {
     //规则是用来固定len和限制适应度函数fitness的
     //固定规则：
     //①周一~周五 9-21  12小时
@@ -48,7 +48,7 @@ public class GA_change {
         Size = size;
     }
 
-    public GA_change(ArrayList<Chromo> group) {
+    public GA_changev3(ArrayList<Chromo> group) {
         this.group = group;
     }//
 
