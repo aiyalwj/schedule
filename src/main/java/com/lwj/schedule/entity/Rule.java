@@ -1,9 +1,13 @@
 package com.lwj.schedule.entity;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.lwj.schedule.handler.JsonTypeHandler;
+
+
 import java.io.Serializable;
 
 /**
@@ -24,11 +28,13 @@ public class Rule implements Serializable {
     @TableField(value = "Rule_shop")
     private String ruleShop;
 
+
+
     /**
      * 规则值
      */
     @TableField(value = "Rule_value")
-    private Object ruleValue;
+    private JSONObject ruleValue;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
@@ -64,14 +70,11 @@ public class Rule implements Serializable {
     /**
      * 规则值
      */
-    public Object getRuleValue() {
+    public JSONObject getRuleValue() {
         return ruleValue;
     }
 
-    /**
-     * 规则值
-     */
-    public void setRuleValue(Object ruleValue) {
+    public void setRuleValue(JSONObject ruleValue) {
         this.ruleValue = ruleValue;
     }
 

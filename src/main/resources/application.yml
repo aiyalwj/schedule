@@ -16,5 +16,6 @@ server:
 mybatis-plus:
   mapper-locations: classpath*:/mapper/*Mapper.xml
   type-aliases-package: com.lwj.schedule.entity
+  type-handlers-package: com.lwj.schedule.handler
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
