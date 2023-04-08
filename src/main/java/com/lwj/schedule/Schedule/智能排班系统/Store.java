@@ -236,7 +236,7 @@ public class Store {
 
         PreModle = new ArrayList<>();
         String str = "D:/Code/Competition/Service outsourcing/yxf_branch1/src/main/java/com/lwj/schedule/utils/abc.xls";
-        PreModle = readExcelFileToList.ReadExcel(str);
+//        PreModle = readExcelFileToList.ReadExcel(str);
 
         //计算需要人数，PreNum为上班前需要打扫卫生的人数，FreeNum为没人时至少有几个员工要值班，AftNum为下班后有几个人要打扫卫生
         int PreNum = (int) Math.abs((size / StoreSizeNeedBefore));
