@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lwj.schedule.mapper.RecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.lwj.schedule.entity.Record">
+            <id property="iid" column="iid" jdbcType="INTEGER"/>
+            <result property="employeeId" column="Employee_id" jdbcType="VARCHAR"/>
+            <result property="employeeName" column="Employee_name" jdbcType="VARCHAR"/>
+            <result property="employeePosition" column="Employee_position" jdbcType="VARCHAR"/>
+            <result property="shopId" column="shop_id" jdbcType="VARCHAR"/>
+            <result property="shopName" column="shop_name" jdbcType="VARCHAR"/>
+            <result property="starttime" column="worktime" jdbcType="TIME"/>
+            <result property="endtime" column="length" jdbcType="TIME"/>
+            <result property="worddate" column="worddate" jdbcType="DATE"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        iid,Employee_id,Employee_name,
+        Employee_position,shop_id,shop_name,
+        starttime,endtime,worddate
+    </sql>
+    <select id="listAllRecord" resultType="com.lwj.schedule.entity.Record">
+        select *
+        from Record
+    </select>
+    <select id="listRecordById" resultType="com.lwj.schedule.entity.Record">
+        select *
+        from Record
+        where iid = #{id}
+    </select>
+    <select id="listRecordByEpName" resultType="com.lwj.schedule.entity.Record">
+        select *
+        from Record
+        where Employee_name like concat('%', #{name}, '%')
+    </select>
+    <select id="listRecordByShopName" resultType="com.lwj.schedule.entity.Record">
+        select *
+        from Record
+        where shop_name like concat('%', #{name}, '%')
+    </select>
+    <select id="listRecordUpStarttime" resultType="com.lwj.schedule.entity.Record">
+        select *
+        from Record
+        where starttime >= #{starttime}
+    </select>
+    <select id="listRecordByPeriod" resultType="com.lwj.schedule.entity.Record">
+        select *
+        from Record
+        where starttime &gt;= #{start}
+        and endtime &lt;= #{end}
+        and worddate = #{workdate}
+    </select>
+    <select id="listRecordByWorkdate" resultType="com.lwj.schedule.entity.Record">
+        select *
+        from Record
+        where worddate = #{workdate}
+    </select>
+    <select id="listWorklengthOneday" resultType="com.lwj.schedule.entity.NewRecord">
+        select Employee_id,Employee_name,shop_id,shop_name,starttime,endtime,timediff(endtime,starttime) as worklength,worddate
+#         select *
+        from Record
+        where worddate = #{workdate}
+    </select>
+
+    <insert id="addRecord">
+        insert into Record(Employee_id, Employee_name, Employee_position, shop_id, shop_name, starttime, endtime, worddate)
+        values (#{employeeId},#{employeeName},#{employeePosition},#{shopId},#{shopName},#{startTime},#{endTime},#{worddate})
+    </insert>
+    <update id="modifyRecordById">
+        update Record
+        set Employee_id = #{employeeId} , Employee_name = #{employeeName} , Employee_position = #{employeePosition} , shop_id = #{shopId} , shop_name = #{shopName} , starttime = #{startTime} , endtime = #{endTime} , worddate = #{worddate}
+        where iid = #{iid}
+    </update>
+    <delete id="deleteRecordById">
+        delete from Record
+        where iid = #{id}
+    </delete>
+
+</mapper>

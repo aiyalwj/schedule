@@ -14,6 +14,9 @@ import java.io.Serializable;
 public class Employeepreferences implements Serializable {
     /**
      * 偏好类型
+     *  工作日偏好
+     *  工作时间偏好
+     *  班次时长偏好
      */
     @TableField(value = "EmployeePreferences_type")
     private String employeepreferencesType;
@@ -26,6 +29,9 @@ public class Employeepreferences implements Serializable {
 
     /**
      * 偏好值
+     *  （工作日偏好） 1、3、4、5、7
+     *  （工作时间偏好） 9:30-21:30 9:00-21:00
+     *  （班次时长偏好） 6
      */
     @TableField(value = "EmployeePreferences_value")
     private String employeepreferencesValue;
