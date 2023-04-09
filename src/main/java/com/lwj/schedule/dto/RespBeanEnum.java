@@ -72,10 +72,14 @@ public enum RespBeanEnum {
     /**
      * 店name没有找到
      */
-    SHOP_NAME_NOT_FOUND(4104,"该名的店不存在","error");
+    SHOP_NAME_NOT_FOUND(4104,"该名的店不存在","error"),
 
-
-
+    RECORD_ID_EMPTY(4201,"记录ID不能为空","warning"),
+    RECORD_ID_NOT_FOUND(4202,"该ID的排班记录不存在","error"),
+    RECORD_EP_NOT_FOUNT(4203,"该员工的排班记录不存在","error"),
+    RECORD_SHOP_NOT_FOUNT(4204,"该店的排班记录不存在","error"),
+    RECORD_TIME_EMPTY(4205,"输入时间不能为空","warning"),
+    RECORD_EMPTY(4206,"记录不能为空","warning");
 
 
     private final Integer code;
