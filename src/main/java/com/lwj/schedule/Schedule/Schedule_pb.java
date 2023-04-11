@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class Schedule_pb {
-
 //    check和status的形状是Size x len， workingTime的形状是Size x len
     public ArrayList<ArrayList<Integer>> check;//check表示员工一天的那么多个时间片中是否在工作
     //check需要是二维数组来确认整个种群上的染色体点位
@@ -221,7 +220,7 @@ public class Schedule_pb {
 
         System.out.print("该员工偏好数组：");
         for(int i=0;i<33;i++){
-            System.out.print(love_arr.get(i));
+            System.out.println(love_arr.get(i));
         }
         return love_arr;
 //        System.out.println();
@@ -298,7 +297,7 @@ public class Schedule_pb {
         }else{
             working_start = sdf.parse("10:00:00");
         }
-        System.out.println(working_start);
+//        System.out.println(working_start);
 
 
         for(Chromo chromo : chromos){
@@ -326,6 +325,7 @@ public class Schedule_pb {
                         stime = working_start.getTime();
                         newDate = new Date();
                         newDate.setTime(stime + 1000*60*30*(j-pre));
+                        record.setStarttime(newDate);
 
 
                         while((j<chromo.chromo.size())&&(chromo.chromo.get(j)==1)){//开始遍历
@@ -336,11 +336,13 @@ public class Schedule_pb {
                             etime = working_start.getTime();
                             newDate = new Date();
                             newDate.setTime(etime + 1000*60*30*(chromo.chromo.size()-1-pre));
+                            record.setEndtime(newDate);
                         }else{//如果是休息退出上面的循环
                             j--;
                             etime = working_start.getTime();
                             newDate = new Date();
                             newDate.setTime(etime + 1000*60*30*(j-pre));
+                            record.setEndtime(newDate);
                         }
                         Records.add(record);
                     }
@@ -368,6 +370,7 @@ public class Schedule_pb {
                     stime = working_start.getTime();
                     newDate = new Date();
                     newDate.setTime(stime + 1000*60*30*(j-pre));
+                    record.setStarttime(newDate);
 
 
                     while((j<chromo.chromo.size())&&(chromo.chromo.get(j)==1)){//开始遍历
@@ -379,11 +382,13 @@ public class Schedule_pb {
                         etime = working_start.getTime();
                         newDate = new Date();
                         newDate.setTime(etime + 1000*60*30*(j-pre));
+                        record.setEndtime(newDate);
                     }else{//如果是休息退出上面的循环
                         j--;
                         etime = working_start.getTime();
                         newDate = new Date();
                         newDate.setTime(etime + 1000*60*30*(j-pre));
+                        record.setEndtime(newDate);
                     }
                     Records.add(record);
                 }
@@ -532,7 +537,7 @@ public class Schedule_pb {
                         if((loves_arr.get(j).get(i)==1)&&(r.nextDouble()<1)&&(persistentTime(j)>0&&persistentTime(j)<8)&&(status.get(j).get(i)==1)&&(check.get(j).get(i)==0)){//等待上班，并且可以上
 //                        将第j个人的工作状态设为上班
 
-                            System.out.println();
+//                            System.out.println();
 
                             Chromo work = group.get(j);
                             work.chromo.set(i,1);
@@ -585,7 +590,7 @@ public class Schedule_pb {
 //              增加工作人员的第三个措施
                 //还缺多少人，随机上
                 while((int)Math.ceil(PopulationsNeed)>countPopulations(i)) {//人不够,随机选在wait的人上班,每次选一个，直到满足为止
-                    System.out.println(countPopulations(i)+" "+(int)Math.ceil(PopulationsNeed)+" "+1);
+//                    System.out.println(countPopulations(i)+" "+(int)Math.ceil(PopulationsNeed)+" "+1);
                     int index = Math.abs(r.nextInt()%Size);
 
 //                    check为0表示未确认，status为1表示waiting，Daytime表示工作时间小于8小时
@@ -646,21 +651,24 @@ public class Schedule_pb {
             group.set(i,tmp);
         }
 
-        for(int i=0;i<Size;i++)
-        {
-            System.out.println("员工"+i);
-            for(int j=0;j<len;j++)
-            {
-                System.out.print(group.get(i).chromo.get(j));
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
+//        //输出员工偏好数组的初始化情况
+//        System.out.println();
+//        System.out.println("Day"+day+"员工偏好数组初始化如下：");
+//        for(int i=0;i<Size;i++)
+//        {
+//            System.out.println("员工"+i);
+//            for(int j=0;j<len;j++)
+//            {
+//                System.out.print(group.get(i).chromo.get(j));
+//                System.out.print(" ");
+//            }
+//            System.out.println();
+//        }
 
         //开始对 记录所有员工情况的数组进行初始化
         init(day);
 
-        System.out.println("请稍后，正在GA中......");
+//        System.out.println("请稍后，正在排班中......");
 
         Random r = new Random();
 
@@ -670,14 +678,8 @@ public class Schedule_pb {
 //       排完班后重置一天的工作时间
         resetDayTime();
 
-        if(day==7)
-            for(int j=0;j<Size;j++){
-                System.out.print("第"+String.valueOf(j)+"个员工的周工作时间为："+String.valueOf(WeekTime(j)));
-            }
-
-
         //完成GA，显示结果
-        System.out.println("Day"+day+"已完成排班，结果如下：");
+        System.out.println("Day"+day+"已完成排班！！！！，结果如下：");
 
         for(int i=0;i<Size;i++)//Size其实就是全体员工的数量，这个for循环是输出全部员工一天的排班结果
         {
@@ -690,7 +692,12 @@ public class Schedule_pb {
             System.out.println();
         }
 
-        System.out.println("结果显示完成!!!");
+        if(day==7)
+            for(int j=0;j<Size;j++){
+                System.out.println("第"+String.valueOf(j)+"个员工的周工作时间为："+String.valueOf(WeekTime(j)));
+            }
+//        System.out.println("结果显示完成!!!");
+        System.out.println();
 //        下面这两次几句代码就是将排完班的结果返回并将排班结果覆盖成没排班之前的状态
         groupTmp1=group;
         group=groupTmp2;
