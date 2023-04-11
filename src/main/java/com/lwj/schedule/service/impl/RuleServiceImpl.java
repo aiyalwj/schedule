@@ -27,6 +27,9 @@ public class RuleServiceImpl extends ServiceImpl<RuleMapper, Rule>
     @Transactional
     public RespBean listAll() {
         List<Rule> ruleList = ruleMapper.listAllRules();
+        for (int i = 0; i < ruleList.size(); i++) {
+            ruleList.get(i).getRuleValue();
+        }
         return RespBean.success(ruleList);
     }
 

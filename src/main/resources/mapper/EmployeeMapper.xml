@@ -49,6 +49,20 @@
         update Employee
         set Employee_name = #{name} , Employee_mail = #{mail} , Employee_position = #{position} , Employee_shop = #{shop} , Employee_pwd = #{pwd}
         where Employee_id = #{id}
+#     replace into Employee(Employee_id, Employee_name, Employee_mail, Employee_position, Employee_shop,Employee_pwd)
+#     values (#{Id},#{employeeName},#{employeeMail},#{employeePosition},#{employeeShop},#{employeePwd})
+    </update>
+
+    <select id="listEmployeeBySameShop" resultType="com.lwj.schedule.entity.Employee">
+        select *
+        from Employee
+        where Employee_shop = #{shop}
+    </select>
+
+    <update id="modifyEmployeeByIdExceptMail">
+        update Employee
+        set Employee_name = #{name} ,Employee_position = #{position} , Employee_shop = #{shop} , Employee_pwd = #{pwd}
+        where Employee_id = #{id}
     </update>
 
     <delete id="deleteEmployeeById">

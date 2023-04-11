@@ -1,12 +1,10 @@
 package com.lwj.schedule.controller;
 
 import com.lwj.schedule.dto.RespBean;
-import com.lwj.schedule.entity.Employee;
 import com.lwj.schedule.service.EmployeeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,13 +29,13 @@ public class EmployeeController {
     }
 
     @ApiOperation(value = "员工查询（根据id）")
-    @GetMapping("/SerchById")
+    @GetMapping("/SearchById")
     public RespBean searchEmployeeById(@RequestParam("id") String id){
         return employeeService.searchById(id);
     }
 
     @ApiOperation(value = "员工查询（根据name）")
-    @PostMapping("/SerchByName")
+    @PostMapping("/SearchByName")
     public RespBean searchEmployeeByName(@RequestParam("name") String name){
         return employeeService.searchByName(name);
     }
@@ -52,5 +50,11 @@ public class EmployeeController {
     @PostMapping("/DeleteEmployee")
     public RespBean deleteEmployee(@RequestParam("id") String id){
         return employeeService.deleteById(id);
+    }
+
+    @ApiOperation(value = "列出某店的员工")
+    @GetMapping("/ListSameshopep")
+    public RespBean listEmployeeBySameshop(@RequestParam("shop") String shop){
+        return employeeService.listEmployeeBySameshop(shop);
     }
 }
