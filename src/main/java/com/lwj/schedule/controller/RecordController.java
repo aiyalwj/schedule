@@ -2,6 +2,7 @@ package com.lwj.schedule.controller;
 
 import com.lwj.schedule.dto.RespBean;
 import com.lwj.schedule.entity.Record;
+import com.lwj.schedule.mapper.RecordMapper;
 import com.lwj.schedule.service.RecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -21,6 +23,7 @@ import java.util.Date;
 public class RecordController {
     @Autowired
     private RecordService recordService;
+    private RecordMapper recordMapper;
 
     SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm:ss");
     SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
@@ -95,5 +98,17 @@ public class RecordController {
     @PostMapping("/deleteRecord")
     public RespBean deleteById(@RequestParam("id") Integer id){
         return recordService.deleteById(id);
+    }
+
+    @ApiOperation(value = "员工工作时间")
+    @GetMapping("/listTime/{shop_id}")
+    public RespBean listTime(@PathVariable String shop_id){
+        return recordService.listTime(shop_id);
+    }
+
+    @ApiOperation(value = "店面总工作时间")
+    @GetMapping("/sumTime/{shop_id}")
+    public RespBean SumTime(@PathVariable String shop_id){
+        return recordService.sumTime(shop_id);
     }
 }

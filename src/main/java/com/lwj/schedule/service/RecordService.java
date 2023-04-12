@@ -28,4 +28,8 @@ public interface RecordService extends IService<Record> {
     RespBean modifyById(Record record);
 
     RespBean deleteById(Integer id);
+
+    RespBean listTime(String shop_id);
+
+    RespBean sumTime(String shop_id);
 }

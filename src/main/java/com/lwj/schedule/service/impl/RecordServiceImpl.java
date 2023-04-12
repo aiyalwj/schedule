@@ -3,6 +3,7 @@ package com.lwj.schedule.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lwj.schedule.dto.RespBean;
 import com.lwj.schedule.dto.RespBeanEnum;
+import com.lwj.schedule.entity.ListTime;
 import com.lwj.schedule.entity.NewRecord;
 import com.lwj.schedule.entity.Record;
 import com.lwj.schedule.service.RecordService;
@@ -24,6 +25,8 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record>
 
     @Autowired
     private RecordMapper recordMapper;
+
+
 
     @Override
     @Transactional
@@ -169,6 +172,32 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record>
         }
         recordMapper.deleteById(id);
         return RespBean.success();
+    }
+
+    @Override
+    @Transactional
+    public RespBean listTime(String shop_id) {
+        if(shop_id == "" || shop_id ==null){
+            return RespBean.error(RespBeanEnum.SHOP_NAME_EMPTY);
+        }
+        List<HashMap<ListTime,Object>> recordList = recordMapper.listTime(shop_id);
+        if(recordList == null){
+            return RespBean.error(RespBeanEnum.RECORD_SHOP_NOT_FOUNT);
+        }
+        return RespBean.success(recordList);
+    }
+
+    @Override
+    @Transactional
+    public RespBean sumTime(String shop_id) {
+        if(shop_id == "" || shop_id ==null){
+            return RespBean.error(RespBeanEnum.SHOP_NAME_EMPTY);
+        }
+        List<HashMap<ListTime,Object>> recordList = recordMapper.sumTime(shop_id);
+        if(recordList == null){
+            return RespBean.error(RespBeanEnum.RECORD_SHOP_NOT_FOUNT);
+        }
+        return RespBean.success(recordList);
     }
 }
 

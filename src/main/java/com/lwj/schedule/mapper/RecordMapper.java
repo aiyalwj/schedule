@@ -1,5 +1,6 @@
 package com.lwj.schedule.mapper;
 
+import com.lwj.schedule.entity.ListTime;
 import com.lwj.schedule.entity.NewRecord;
 import com.lwj.schedule.entity.Record;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -7,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -38,6 +40,10 @@ public interface RecordMapper extends BaseMapper<Record> {
     void modifyRecordById(Record record);
 
     void deleteRecordById(@Param("id") String id);
+
+    List<HashMap<ListTime,Object>> listTime(@Param("shop_id") String shop_id);
+
+    List<HashMap<ListTime,Object>> sumTime(@Param("shop_id") String shop_id);
 
 }
 
