@@ -5,6 +5,7 @@ import com.lwj.schedule.Schedule.Schedule_pb;
 import com.lwj.schedule.dto.RespBean;
 import com.lwj.schedule.entity.EmployeeSchedule;
 import com.lwj.schedule.entity.Record;
+import com.lwj.schedule.mapper.RecordMapper;
 import com.lwj.schedule.service.EmployeeScheduleService;
 import com.lwj.schedule.mapper.EmployeeScheduleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,8 @@ import java.util.List;
 public class EmployeeScheduleServiceImpl extends ServiceImpl<EmployeeScheduleMapper, EmployeeSchedule> implements EmployeeScheduleService {
     @Autowired
     private EmployeeScheduleMapper employeeScheduleMapper;
-//    @Autowire
+    @Autowired
+    private RecordMapper recordMapper;
 
     @Override
     @Transactional
@@ -36,11 +38,11 @@ public class EmployeeScheduleServiceImpl extends ServiceImpl<EmployeeScheduleMap
         ArrayList<EmployeeSchedule> ListEmployeeSchedule = employeeScheduleMapper.selectEmployeeBySid(shop_id);
         ArrayList<ArrayList<Record>> records = (new Schedule_pb(preModel, ListEmployeeSchedule, start_date)).Schedule();
 
-        for(ArrayList<Record> records1 : records){
-            for(Record records2 : records1){
-
-            }
-        }
+//        for(ArrayList<Record> records1 : records){
+//            for(Record records2 : records1){
+//                recordMapper.addRecord(records2);
+//            }
+//        }
         return RespBean.success(records);
     }
 }

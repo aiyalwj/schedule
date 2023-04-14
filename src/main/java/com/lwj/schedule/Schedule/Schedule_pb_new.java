@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
-public class Schedule_pb {
+public class Schedule_pb_new {
 //    check和status的形状是Size x len， workingTime的形状是Size x len
     public ArrayList<ArrayList<Integer>> check;//check表示员工一天的那么多个时间片中是否在工作
     //check需要是二维数组来确认整个种群上的染色体点位
@@ -72,17 +72,6 @@ public class Schedule_pb {
         return res;
     }
 
-    //  计算最后四个班次中需要的最大人数
-    private Double count4max(ArrayList<Double> PassFlowNum){
-        Double max = 0.0;
-        for(int num=PassFlowNum.size()-(4-later);num<PassFlowNum.size();num++){
-            if(max<PassFlowNum.get(num)){
-                max = PassFlowNum.get(num);
-            }
-        }
-        return max;
-    }
-
     //  持续上班时间
     private int persistentTime(int index) {
         return workingTime.get(index).get(0);
@@ -116,28 +105,6 @@ public class Schedule_pb {
 //            status=1代表waiting即准备上班，check代表每个时间片中是否在工作
             if(Math.abs(r.nextInt()%10000/10000.0)<pm&&check.get(i).get(pos)==0&&status.get(i).get(pos)==1&&(workingTime.get(i).get(2)<=76)){//未确认，在waiting才能变异上班,并且满足概率
                 if(group.get(i).chromo.get(pos)==0) {//这个分支设成要上班
-                    Chromo chro = group.get(i);
-                    chro.chromo.set(pos,1);
-                    group.set(i,chro);
-                }
-                else{//这个分支设成不要上班
-                    Chromo chro = group.get(i);
-                    chro.chromo.set(pos,0);
-                    group.set(i,chro);
-                }
-            }
-        }
-    }
-
-    //对倒数第四个时间片进行排班
-    private void mutate_last(int pos, int num_need){
-        Random r = new Random();
-        int num = 0;
-        while(num!=num_need){
-            int i = r.nextInt(Size);//随机产生一个员工编号
-            if(Math.abs(r.nextInt()%10000/10000.0)<pm&&check.get(i).get(pos)==0&&status.get(i).get(pos)==1&&(workingTime.get(i).get(2)<=76)&&group.get(i).chromo.get(pos-1)==0&&(workingTime.get(i).get(1)<=12)){//未确认，在waiting才能变异上班,并且满足概率
-                if(group.get(i).chromo.get(pos)==0) {//这个分支设成要上班
-                    num++;
                     Chromo chro = group.get(i);
                     chro.chromo.set(pos,1);
                     group.set(i,chro);
@@ -277,7 +244,7 @@ public class Schedule_pb {
     }
 
     //  有参构造方法
-    public Schedule_pb(ArrayList<ArrayList<Double>> Premodel, ArrayList<EmployeeSchedule> Stuffs, Date start_time){
+    public Schedule_pb_new(ArrayList<ArrayList<Double>> Premodel, ArrayList<EmployeeSchedule> Stuffs, Date start_time){
         this.Premodel = Premodel;
         this.Stuffs = Stuffs;
         this.start_time = start_time;
@@ -470,6 +437,7 @@ public class Schedule_pb {
                 tmp.chromo.set(i,tmp.chromo.get(i-1));
                 group.set(j,tmp);
             }
+//            System.out.println("基因位"+i+"已确认");
         }
 
 
@@ -496,10 +464,12 @@ public class Schedule_pb {
         }
 
 //      下面这个大循环开始进行正式上班时间的排班
-        for(int i=pre;i<len-4;i++) {
+        for(int i=pre;i<len;i++) {
 
 //            首先确定需要上班的人数
-            double PopulationsNeed = PassFlowNum.get(i-pre);
+            double PopulationsNeed = 0;
+            if (i >= pre && i < len-later) PopulationsNeed = PassFlowNum.get(i-pre);//如果是在正常上班的时间段
+            else if (i >= len-later) PopulationsNeed = AftNum;//如果是在下班后的那个时间段的话
             if((int)PopulationsNeed==0) PopulationsNeed =FreeNum;//没有人时至少需要1人
 
 
@@ -746,99 +716,37 @@ public class Schedule_pb {
 
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             }
+//            if(i>=2){
+//                for(int j=0;j<Size;j++){
+//                    if(group.get(j).chromo.get(i)==1&&group.get(j).chromo.get(i-1)==0&&group.get(j).chromo.get(i-2)==1){
+//                            System.out.println("此处有异常！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！");
+//                            System.out.println(check.get(j));
+//                            System.out.println(status.get(j));
+//                            System.out.println(workingTime.get(j));
+//                            System.out.println(group.get(j).chromo);
+//                            System.out.println(love_arrs.get(j));
+//                            System.out.println("查看异常结束！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！");
+//                    }
+//                }
+//            }
             for(int j=0;j<Size;j++) {
-//                  下面是看所有员工的check是否有为0的，也就是没被确认过的，如果有一定是没被排班，那么重置连续工作时间
+                //                  下面是看所有员工的check是否有为0的，也就是没被确认过的，如果有一定是没被排班，那么重置连续工作时间
 //                        if(check.get(j).get(i)==0)
                 if(group.get(j).chromo.get(i)==0)
                 {
                     resetPerTime(j);
                 }
             }
-        }
-
-        for(int i=len-4;i<len;i++){
-            if(i==len-4){
-                double PopulationsNeed = count4max(PassFlowNum);
-                //这里的变异直接产生后面四个班次需要的人数，和前面已经上班的人无关
-                mutate_last(len-4, (int)Math.ceil(PopulationsNeed));
-            }
-
-            for(int j=0;j<Size;j++){
-                //如果是是在倒数第四个时间片之前的一个时间片就在上班
-                //如果工作时间>=4个时间片，那么就不用上班了
-                if(group.get(j).chromo.get(i-1)==1){
-                    if(persistentTime(j)>=4){
-                        ArrayList<Integer> tmp = check.get(j);
-                        tmp.set(i, 1);//check 1代表确认
-                        check.set(j, tmp);
-
-                        tmp = status.get(j);
-                        tmp.set(i, 3);//status 3代表休息
-                        status.set(j, tmp);
-                        resetPerTime(j);
-                    }
-                    else{
-                        Chromo work = group.get(j);
-                        work.chromo.set(i, 1);
-                        group.set(j, work);
-
-                        ArrayList<Integer> tmp = check.get(j);
-                        tmp.set(i, 1);//确认上班
-                        check.set(j, tmp);
-
-                        tmp = status.get(j);
-                        tmp.set(i, 2);//上班中
-                        status.set(j, tmp);
-
-                        tmp = workingTime.get(j);
-                        tmp.set(0, persistentTime(j) + 1);
-                        tmp.set(1, DayTime(j) + 1);
-                        tmp.set(2, WeekTime(j) + 1);
-                        workingTime.set(j, tmp);
-                    }
-                }else{//如果前一个时间片不在上班
-                    //如果当前时间片在上班，那么是在第len-4个时间片被mutete_last选上了
-                    if(group.get(j).chromo.get(i)==1){
-                        Chromo work = group.get(j);
-                        work.chromo.set(i, 1);
-                        group.set(j, work);
-
-                        ArrayList<Integer> tmp = check.get(j);
-                        tmp.set(i, 1);//确认上班
-                        check.set(j, tmp);
-
-                        tmp = status.get(j);
-                        tmp.set(i, 2);//上班中
-                        status.set(j, tmp);
-
-                        tmp = workingTime.get(j);
-                        tmp.set(0, persistentTime(j) + 1);
-                        tmp.set(1, DayTime(j) + 1);
-                        tmp.set(2, WeekTime(j) + 1);
-                        workingTime.set(j, tmp);
-                    }
-                    //当前时间片也不需要上班
-                    else{
-                        ArrayList<Integer> tmp = check.get(j);
-                        tmp.set(i, 1);//check 1代表确认
-                        check.set(j, tmp);
-
-                        tmp = status.get(j);
-                        tmp.set(i, 3);//status 3代表休息
-                        status.set(j, tmp);
-                        resetPerTime(j);
-                    }
-                }
-            }
             if(i==len-1){//如果是最后一个时间片，那么需要把本次排班的连续工作时间、日工作时间给清掉
                 for(int j=0;j<Size;j++) {
                     //                  下面是看所有员工的check是否有为0的，也就是没被确认过的，如果有一定是没被排班，那么重置连续工作时间
 //                        if(check.get(j).get(i)==0)
-                    resetPerTime(j);
+                   resetPerTime(j);
                 }
                 resetDayTime();
             }
         }
+            //            System.out.println("基因位"+i+"已确认");
     }
 
     //PassFlowNum为各个时间片需要的员工数量，pre为上班前的时间片数目，而later为下班后的时间片数目，day为一周中的第几天，loves_arr为员工的偏好

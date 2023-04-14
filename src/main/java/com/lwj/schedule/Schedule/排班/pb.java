@@ -1,9 +1,6 @@
-package com.lwj.schedule.Schedule.智能排班系统;
-import com.lwj.schedule.Schedule.智能排班系统.遗传算法.Chromo;
-import com.lwj.schedule.Schedule.智能排班系统.遗传算法.GA_group;
+package com.lwj.schedule.Schedule.排班;
 import com.lwj.schedule.entity.EmployeeSchedule;
 
-import java.sql.SQLOutput;
 import java.sql.Timestamp;
 import java.util.*;
 public class pb {

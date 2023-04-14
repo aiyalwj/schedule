@@ -1,18 +1,10 @@
-package com.lwj.schedule.Schedule.智能排班系统.遗传算法;
+package com.lwj.schedule.Schedule.排班.核心算法;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- *使用说明：
- * ①无法保证每周40小时的排班，只能通过适当人员的增加来完成这个适合度
- * ②group是一天内所有员工的时间染色体集，也就是种群，用于遗传
- * ③chromo是染色体
- */
 
-
-//是v1的带注释版本
-public class GA_changev2 {
+public class GA_changev1 {
     //规则是用来固定len和限制适应度函数fitness的
     //固定规则：
     //①周一~周五 9-21  12小时
@@ -28,7 +20,7 @@ public class GA_changev2 {
     //③没有客流的时候 至少d人员值班
     //④关门后需要e小时收尾 门店买诺记/f + g = 人数
 
-    //    这里的group和Store中定义了一样的数据结构的group
+//    这里的group和Store中定义了一样的数据结构的group
     public ArrayList<Chromo> group;//种群，染色体集
 
     //动态数组记录状态
@@ -51,39 +43,35 @@ public class GA_changev2 {
         Size = size;
     }
 
-    public GA_changev2(ArrayList<Chromo> group) {
+    public GA_changev1(ArrayList<Chromo> group) {
         this.group = group;
     }//
 
-    /**
-     * 某个班次的上班人数
-     */
+//     某个班次的上班人数
     private int countPopulations(int index) {
         int res=0;
-//        Size为可上班的人数，为所有员工数量
         for(int i=0;i<Size;i++) {
-//            可上班的人数Size一定就是group里前Size个人吗？
             if(group.get(i).chromo.get(index)==1) res++;
         }
-        return res;//多少个人
-    }//
+        return res;
+    }
 
-    //  持续上班时间
+//  持续上班时间
     private int persistentTime(int index) {
         return workingTime.get(index).get(0);
     }
 
-    //    日工作时间
+//    日工作时间
     private int DayTime(int index) {
         return workingTime.get(index).get(1);
     }//
 
-    //  周工作时间
+//  周工作时间
     private int WeekTime(int index){
         return workingTime.get(index).get(2);
     }
 
-    //下班后重置员工的连续工作时间
+//  下班后重置员工的连续工作时间
     private void resetPerTime(int index)
     {
         ArrayList<Integer> tmp=workingTime.get(index);
@@ -91,7 +79,7 @@ public class GA_changev2 {
         workingTime.set(index,tmp);
     }
 
-    //  重置所有员工的日工作时间
+//  重置所有员工的日工作时间
     private void resetDayTime(){
         for(int j=0;j<Size;j++){
             ArrayList<Integer> tmp=workingTime.get(j);
@@ -100,7 +88,8 @@ public class GA_changev2 {
         }
     }
 
-    private int checkPopulation(int index)//还差多少人
+    //还差多少人
+    private int checkPopulation(int index)
     {
         int res=0;
         for(int i=0;i<Size;i++) {
@@ -114,42 +103,27 @@ public class GA_changev2 {
         //如果现在len是28，代表 pre 24 later的一个时间构造，解析上班时间的时候，就需要传上下班这个参数来确定
 
         Random r = new Random();
-        // group变量是包含了所有员工一天的时间片列表合集，同时group里存储的Chromo是最终要返回的所有员工在每个时间片是否要上班
 
-
-//        //  每次排班都将上次的排班结果进行覆盖
-//        for(int i=0;i<group.size();i++)
-//        {
-//            Chromo tmp=group.get(i);
-//            for(int j=0;j<len;j++)
-//            {
-//                tmp.chromo.set(j,0);
-//            }
-//            group.set(i,tmp);
-//        }
-        //每次排班重置group，不然都是一样的？？？这句话我没理解，如果每次调用fitness函数都重置group，那么上次排班结果会被覆盖掉，那些check status workingtime数组记录还在，各自有什么作用？
 
 //        如果上班前打扫为生的人不够，那就一直变异，直到人数够为止
-        while(countPopulations(0)!=PreNum) {//PreNum个人工作前打扫
+        while(countPopulations(0)!=PreNum) {
             mutate(0);//变异第一列
         }
 
-//       pre为上班前的时间片数目
         for(int i=1;i<pre;i++) {
-            for(int j=0;j<Size;j++) {
-//               下面这句代码意思是把每个员工从group中取出来
+           for(int j=0;j<Size;j++) {
                 Chromo tmp = group.get(j);
 //              下面这句代码——如果变异后你是要工作的人，那么打扫卫生的全部时间段你都要参加，如果不打扫，那么所有时间段都不用参与（下面的for循环也是这样的作用）
                 tmp.chromo.set(i,tmp.chromo.get(i-1));
                 group.set(j,tmp);
-            }
+           }
             System.out.println("基因位"+i+"已确认");
         }
 
 
         //确认变异的第一列后进行check，status，workingTime的修改
         for(int i=0;i<pre;i++) {
-            for(int j=0;j<Size;j++) {//j需要参数
+            for(int j=0;j<Size;j++) {
                 if (group.get(j).chromo.get(i) == 1) {//如果第一班次被选中
                     ArrayList<Integer> tmp = check.get(j);
                     tmp.set(i, 1);//check 1代表确认
@@ -184,13 +158,13 @@ public class GA_changev2 {
                     ArrayList<Integer> tmp = check.get(j);
                     tmp.set(i, 1);//确认
                     if(i+1<len)//这里应该是希望给员工安排一个小时的休息时间，而一个小时两个时间片，那么就就需要看是否越界了
-                        tmp.set(i + 1, 1);
+                    tmp.set(i + 1, 1);
                     check.set(j, tmp);
 
                     tmp = status.get(j);
                     tmp.set(i, 3);//休息中
                     if(i+1<len)
-                        tmp.set(i + 1, 3);//休息
+                    tmp.set(i + 1, 3);//休息
                     status.set(j, tmp);
                     resetPerTime(j);//重置这个人的连续工作时间
                 }
@@ -224,7 +198,7 @@ public class GA_changev2 {
                         tmp.set(k, 3);//休息中
                         status.set(j, tmp);
                     }
-                }//今天就工作完了
+                }
             }
 
 
@@ -265,7 +239,7 @@ public class GA_changev2 {
                         if((loves_arr.get(j).get(i)==1)&&(r.nextDouble()<1)&&(persistentTime(j)>0&&persistentTime(j)<8)&&(status.get(j).get(i)==1)&&(check.get(j).get(i)==0)){//等待上班，并且可以上
 //                        将第j个人的工作状态设为上班
 
-                            System.out.println();
+                        System.out.println();
 
                             Chromo work = group.get(j);
                             work.chromo.set(i,1);
@@ -350,45 +324,13 @@ public class GA_changev2 {
 
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             }
-
-//
-//
-////                    之前是判断上一个时间片上班的人和需要上班的人之间的关系
-////                    这里代表当前的时间片中上班的人少于需要上班的人数
-//                    while(countPopulations(i)<(int)Math.ceil(PopulationsNeed)) {
-//                        System.out.println(countPopulations(i)+" "+(int)Math.ceil(PopulationsNeed)+" "+2);
-//                        int index = Math.abs(r.nextInt()%Size);
-////                        check.get(index)代表第index个员工，后面再.get(i)代表当前的第i个时间片
-////                      如果当前时间片还有员工状态没有确认，且可以上班且连续工作时间不超过4小时，且日工作时间不超过2小时
-//                        if(check.get(index).get(i)==0&&status.get(index).get(i)==1&&DayTime(index)<16&&persistentTime(index)<8) {
-//                            //index上班，其他的下班(重置持续时间)
-//                            Chromo work = group.get(index);
-//                            work.chromo.set(i, 1);
-//                            group.set(index, work);
-//
-////                          check确认
-//                            ArrayList<Integer> tmp = check.get(index);
-//                            tmp.set(i, 1);
-//                            check.set(index, tmp);
-//
-////                          确认上班状态
-//                            tmp = status.get(index);
-//                            tmp.set(i, 2);
-//                            status.set(index, tmp);
-//
-//                            tmp = workingTime.get(index);
-//                            tmp.set(0, persistentTime(index) + 1);
-//                            tmp.set(1, DayTime(index) + 1);
-//                            workingTime.set(index, tmp);
-//                        }
-//                    }
-            for(int j=0;j<Size;j++) {
-//                  下面是看所有员工的check是否有为0的，也就是没被确认过的，如果有一定是没被排班，那么resetperTime
-                if(check.get(j).get(i)==0)
-                {
-                    resetPerTime(j);//重置它的持续时间
+                for(int j=0;j<Size;j++) {
+//                  下面是看所有员工的check是否有为0的，也就是没被确认过的，如果有一定是没被排班，那么重置连续工作时间
+                    if(check.get(j).get(i)==0)
+                    {
+                        resetPerTime(j);
+                    }
                 }
-            }
             System.out.println("基因位"+i+"已确认");
         }
     }
@@ -417,53 +359,10 @@ public class GA_changev2 {
         }
     }
 
-//    //变异，变异概率pm
-//    //对某一点位全部随机变异
-//    private void mutatev1(int pos, double probability,ArrayList<ArrayList<Integer>> loves_arr) {
-//        //取反即可
-//        Random r = new Random();
-//        for(int i=0;i<Size;i++) {
-//
-////            如果是当前时间在某些员工的工作时间偏好中
-////            status=1代表waiting即准备上班，check代表每个时间片中是否在工作
-//            if((Math.abs(r.nextInt()%10000/10000.0)<0.6) && (check.get(i).get(pos)==0&&status.get(i).get(pos)==1) && ((loves_arr.get(i).get(0)==2) && ())){//未确认，在waiting才能变异上班,并且满足概率
-//                if(group.get(i).chromo.get(pos)==0) {//这个分支设成要上班
-//                    Chromo chro = group.get(i);
-//                    chro.chromo.set(pos,1);
-//                    group.set(i,chro);
-//                }
-//                else{//这个分支设成不要上班
-//                    Chromo chro = group.get(i);
-//                    chro.chromo.set(pos,0);
-//                    group.set(i,chro);
-//                }
-//            }
-//
-////            如果前一个时间片中有员工在工作，那也把他们设为可变异的对象
-//            if((Math.abs(r.nextInt()%10000/10000.0)<probability) && (check.get(i).get(pos)==0&&status.get(i).get(pos)==1)){//未确认，在waiting才能变异上班,并且满足概率
-//                if(group.get(i).chromo.get(pos)==0) {//这个分支设成要上班
-//                    Chromo chro = group.get(i);
-//                    chro.chromo.set(pos,1);
-//                    group.set(i,chro);
-//                }
-//                else{//这个分支设成不要上班
-//                    Chromo chro = group.get(i);
-//                    chro.chromo.set(pos,0);
-//                    group.set(i,chro);
-//                }
-//            }
-//        }
-//    }
 
-
-
-    //  初始化的具体内容——check，status，working
     private void init(int Day)
     {
-        //初始化check，将所有员工的状态设成一天中时间片数目的全0数组
-//        len为一天中时间片的数量
-//        check为员工在每个时间片中是否在工作
-//        初始化：令所有时间片的check为0，即——所有的时间片都需要之后去确认
+//      初始化check，将所有员工的状态设成一天中时间片数目的全0数组
         check = new ArrayList<>();
         for (int i = 0; i < Size; i++) {
             ArrayList<Integer> tmp = new ArrayList<>();
@@ -474,12 +373,8 @@ public class GA_changev2 {
             check.add(tmp);
         }
 
-        //初始化状态status，status的意思是表示当前所有员工每个时间片的状态
-//        初始化令所有时间片状态为waiting
+//      初始化令所有时间片状态为waiting
         status = new ArrayList<>();
-        //1代表waiting 准备上班，应该是当前时间没有被排班的意思
-        //2代表working 上班中
-        //3代表resting 休息中/吃饭中，这个时候不能派班
         for (int i = 0; i < Size; i++) {
             ArrayList<Integer> tmp = new ArrayList<>();
             for(int j=0;j<len;j++)
@@ -489,10 +384,8 @@ public class GA_changev2 {
             status.add(tmp);
         }
 
-        //初始化工作时间workingTime，
-//        当前作者没有把周工作时间写进去，把连续工作时间和日工作时间初始化为0
-        if(Day==1){//如果是周一那么初始化工作时间
-            //0下标表示连续工作时间，1下标表示日工作时间 2下标表示周工作时间
+//      如果是周一那么，初始化工作时间
+        if(Day==1){
             workingTime = new ArrayList<>();
             for (int i = 0; i < Size; i++) {
                 ArrayList<Integer> tmp = new ArrayList<>();
@@ -506,7 +399,6 @@ public class GA_changev2 {
 
     }
 
-    //GA算法主体
     //PreNum为上班前需要的人数，FreeNum为没人时至少需要几人值班，PassFlowNum为各个时间片需要的员工数量，pre为上班前的时间片数目，而later为下班后的时间片数目，day为一周中的第几天，loves_arr为员工的偏好
     public ArrayList<Chromo> GA(int PreNum, int FreeNum, int AftNum, ArrayList<Double> PassFlowNum, int pre, int later,int day,ArrayList<ArrayList<Integer>> loves_arr)//偏好数组和星期几，用于check
     {
@@ -536,18 +428,14 @@ public class GA_changev2 {
             System.out.println();
         }
 
-        ///////////////////////////////////////////////////////////////////
         //开始对 记录所有员工情况的数组进行初始化
         init(day);
-        /////////////////////////////////////////////////////////////////
 
         System.out.println("请稍后，正在GA中......");
-        //1.初始化种群
-        //2.while次迭代以全局适应
+
         Random r = new Random();
 
         // fitness里包含了循环，直到排完班才结束
-        ///////如何实现周排班——其实相比于日排班只是多了一个周最长工作时间
         fitness(PreNum,FreeNum,AftNum,PassFlowNum,pre,later,loves_arr);
 
 //       排完班后重置一天的工作时间
