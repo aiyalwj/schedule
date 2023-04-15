@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lwj.schedule.mapper.EmployeeScheduleMapper">
+
+    <resultMap id="BaseResultMap" type="com.lwj.schedule.entity.EmployeeSchedule">
+            <result property="employeeId" column="Employee_id" jdbcType="VARCHAR"/>
+            <result property="employeeName" column="Employee_name" jdbcType="VARCHAR"/>
+            <result property="shopId" column="Shop_Id" jdbcType="VARCHAR"/>
+            <result property="employeepreferencesType" column="EmployeePreferences_type" jdbcType="VARCHAR"/>
+            <result property="employeepreferencesValue" column="EmployeePreferences_value" jdbcType="VARCHAR"/>
+            <result property="employeePosition" column="Employee_position" jdbcType="VARCHAR"/>
+            <result property="shopName" column="Shop_Name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        Employee_id,Employee_name,Shop_Id,
+        EmployeePreferences_type,EmployeePreferences_value,Employee_position,
+        Shop_Name
+    </sql>
+    <select id="selectEmployeeBySid" resultType="com.lwj.schedule.entity.EmployeeSchedule">
+        select * from Employee_Schedule where Shop_Id = #{shop_id}
+    </select>
+</mapper>

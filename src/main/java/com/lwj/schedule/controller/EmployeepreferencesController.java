@@ -19,6 +19,7 @@ public class EmployeepreferencesController {
     @ApiOperation(value = "员工偏好查询（根据id）")
     @GetMapping("/SearchById")
     public RespBean SearchByid(@RequestParam("Employee_id") String Employee_id){
+//        System.out.println(Employee_id);
         return employeepreferencesService.SearchById(Employee_id);
     }
 

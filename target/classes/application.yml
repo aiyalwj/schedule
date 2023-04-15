@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://42.192.47.5:3306/pb?characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowMultiQueries=true&zeroDateTimeBehavior=CONVERT_TO_NULL
+    username: root
+    password: csm123456
+  mvc:
+    pathmatch:
+      matching-strategy : ANT_PATH_MATCHER
+
+
+server:
+  port: 50070
+  #9047
+
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*Mapper.xml
+  type-aliases-package: com.lwj.schedule.entity
+  type-handlers-package: com.lwj.schedule.handler
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
