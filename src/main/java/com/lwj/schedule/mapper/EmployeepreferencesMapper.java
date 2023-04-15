@@ -24,6 +24,10 @@ public interface EmployeepreferencesMapper extends BaseMapper<Employeepreference
     void ModifyEP(String employeePreferences_type, String employee_id, String employeePreferences_value);
 
     void DeleteEP(String employeePreferences_type, String employee_id);
+
+    List<Employeepreferences> SearchByShopid(String shop_id);
+
+    List<Employeepreferences> listAll();
 }
 
 

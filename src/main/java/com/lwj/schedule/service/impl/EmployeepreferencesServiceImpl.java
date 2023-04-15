@@ -56,6 +56,18 @@ public class EmployeepreferencesServiceImpl extends ServiceImpl<Employeepreferen
         employeepreferencesMapper.DeleteEP(employeePreferences_type, employee_id);
         return RespBean.success(RespBeanEnum.SUCCESS);
     }
+    @Override
+    @Transactional
+    public RespBean listAll() {
+        List<Employeepreferences> ListEmployeeprefer = employeepreferencesMapper.listAll();
+        return RespBean.success(ListEmployeeprefer);
+    }
+    @Override
+    @Transactional
+    public RespBean SearchByShopid(String shop_id) {
+        List<Employeepreferences> ListEmployeeprefer = employeepreferencesMapper.SearchByShopid(shop_id);
+        return RespBean.success(ListEmployeeprefer);
+    }
 }
 
 

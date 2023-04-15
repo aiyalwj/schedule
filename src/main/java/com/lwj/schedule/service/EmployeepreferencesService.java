@@ -20,4 +20,8 @@ public interface EmployeepreferencesService extends IService<Employeepreferences
     RespBean ModifyEP(String employeePreferences_type, String employee_id, String employeePreferences_value);
 
     RespBean DeleteEP(String employeePreferences_type, String employee_id);
+
+    RespBean SearchByShopid(String shop_id);
+
+    RespBean listAll();
 }

@@ -16,18 +16,17 @@ public class EmployeepreferencesController {
     @Autowired
     private EmployeepreferencesService employeepreferencesService;
 
-    @ApiOperation(value = "员工偏好查询（根据id）")
-    @GetMapping("/SearchById")
-    public RespBean SearchByid(@RequestParam("Employee_id") String Employee_id){
-        return employeepreferencesService.SearchById(Employee_id);
+    @ApiOperation(value = "员工偏好查询")
+    @GetMapping("/listAll")
+    public RespBean listAll(){
+        return employeepreferencesService.listAll();
     }
 
-    @ApiOperation(value = "员工偏好查询（根据偏好类型）")
-    @GetMapping("/SearchByEPType")
-    public RespBean SearchByEPType(@RequestParam("EmployeePreferences_type") String EmployeePreferences_type){
-        return employeepreferencesService.SearchByEPType(EmployeePreferences_type);
+    @ApiOperation(value = "员工偏好查询（根据店id）")
+    @GetMapping("/SearchByShopid")
+    public RespBean SearchByShopid(@RequestParam("shop_id") String shop_id){
+        return employeepreferencesService.SearchByShopid(shop_id);
     }
-
     @ApiOperation(value = "创建员工偏好")
     @PostMapping("/CreateEP")
     public RespBean CreateEP(@RequestParam("EmployeePreferences_type") String EmployeePreferences_type, @RequestParam("Employee_id") String Employee_id, @RequestParam("EmployeePreferences_value") String EmployeePreferences_value){
