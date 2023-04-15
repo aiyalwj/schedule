@@ -29,14 +29,14 @@ public class EmployeeController {
     }
 
     @ApiOperation(value = "员工查询（根据id）")
-    @GetMapping("/SearchById")
-    public RespBean searchEmployeeById(@RequestParam("id") String id){
+    @PostMapping("/SearchById")
+    public RespBean searchEmployeeById(@RequestBody String id){
         return employeeService.searchById(id);
     }
 
     @ApiOperation(value = "员工查询（根据name）")
     @PostMapping("/SearchByName")
-    public RespBean searchEmployeeByName(@RequestParam("name") String name){
+    public RespBean searchEmployeeByName(@RequestBody String name){
         return employeeService.searchByName(name);
     }
 
