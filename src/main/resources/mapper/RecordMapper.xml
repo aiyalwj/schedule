@@ -11,8 +11,8 @@
             <result property="employeePosition" column="Employee_position" jdbcType="VARCHAR"/>
             <result property="shopId" column="shop_id" jdbcType="VARCHAR"/>
             <result property="shopName" column="shop_name" jdbcType="VARCHAR"/>
-            <result property="starttime" column="worktime" jdbcType="TIME"/>
-            <result property="endtime" column="length" jdbcType="TIME"/>
+            <result property="startTime" column="worktime" jdbcType="TIME"/>
+            <result property="endTime" column="length" jdbcType="TIME"/>
             <result property="worddate" column="worddate" jdbcType="DATE"/>
     </resultMap>
 
