@@ -32,4 +32,12 @@
         select * from EmployeePreferences where EmployeePreferences_type = #{employeePreferences_type}
     </select>
 
+    <select id="SearchByShopid" resultType="com.lwj.schedule.entity.Employeepreferences">
+        SELECT * FROM EmployeePreferences
+        WHERE Employee_id IN
+              (SELECT Employee_id FROM Employee WHERE Employee_shop = #{shop_id})
+    </select>
+    <select id="listAll" resultType="com.lwj.schedule.entity.Employeepreferences">
+        SELECT * FROM EmployeePreferences
+    </select>
 </mapper>

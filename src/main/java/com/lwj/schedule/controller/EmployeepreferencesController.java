@@ -27,7 +27,7 @@ public class EmployeepreferencesController {
     public RespBean SearchByShopid(@RequestParam("shop_id") String shop_id){
         return employeepreferencesService.SearchByShopid(shop_id);
     }
-    @ApiOperation(value = "员工偏好查询（根据店id）")
+    @ApiOperation(value = "员工偏好查询（根据id）")
     @GetMapping("/SearchByid")
     public RespBean SearchByid(@RequestParam("employee_id") String employee_id){
         return employeepreferencesService.SearchById(employee_id);

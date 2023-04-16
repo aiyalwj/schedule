@@ -67,7 +67,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee>
         if(pwd == "" || pwd ==null){
             return RespBean.error(RespBeanEnum.EMP_PWD_EMPTY);
         }
-        if(employeeMapper.listEmployeeByMail(mail) != null){
+        if(employeeMapper.listEmployeeByMail(mail).size() != 0){
             return RespBean.error(RespBeanEnum.EMP_MAIL_EXIST);
         }
         String id = RandomUtils.generateTicket();

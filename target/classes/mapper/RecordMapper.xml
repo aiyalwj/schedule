@@ -78,4 +78,18 @@
         where iid = #{id}
     </delete>
 
+    <select id="listTime" resultType="Hashmap">
+        select  Employee_name as name,
+            sum(TRUNCATE((endtime-starttime)/10000,0) + ((endtime-starttime)/10000%1)/0.6) as value
+        from Record
+        WHERE shop_id = #{shop_id}
+        group by Employee_id
+    </select>
+    <select id="sumTime" resultType="Hashmap">
+    SELECT worddate as name,
+        sum(TRUNCATE((endtime-starttime)/10000,0) + ((endtime-starttime)/10000%1)/0.6) as value
+    from Record
+    WHERE shop_id = #{shop_id}
+    group by shop_id, worddate
+    </select>
 </mapper>
