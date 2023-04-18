@@ -349,7 +349,7 @@ public class Schedule_pb {
             working_end = sdf.parse("09:30:00");
         }else{
             working_start = sdf.parse("10:00:00");
-            working_end = sdf.parse("10:00:00");
+            working_end = sdf.parse("10:30:00");
         }
 
 //        System.out.println(working_start);
