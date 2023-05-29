@@ -23,7 +23,8 @@ class ScheduleApplicationTests {
     @Test
     void contextLoads() {
 //        employeeService.modifyById("004","吴书雨","004@qq.com","副董事长","上城区","123456");
-        employeeService.deleteById("a310832decba4e3787d3d3473d529114");
+        employeeService.listAll();
+//        employeeService.deleteById("a310832decba4e3787d3d3473d529114");
     }
 
     @Test

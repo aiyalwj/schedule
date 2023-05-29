@@ -10,10 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -33,7 +30,7 @@ public class ScheduleController {
     private EmployeeScheduleService employeeScheduleService;
 
     @ApiOperation(value = "一键排班")
-    @GetMapping("/Schedule")
+    @PostMapping("/Schedule")
 //    HSSFWorkbook
     public RespBean Schedule(@RequestParam("passenger_flow") MultipartFile passenger_flow, @RequestParam("shop_id") String shop_id, @RequestParam("start_date") Date start_date) throws ParseException, IOException {
         //将MultipartFile转化为HSSFWorkbook

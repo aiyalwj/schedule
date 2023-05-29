@@ -2,8 +2,6 @@ package com.lwj.schedule.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -31,9 +29,9 @@ public class SwaggerConfig{
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title(" Intelligent shift scheduling system APIs")
-                .description("Intelligent shift scheduling system APIs")
-                .termsOfServiceUrl("http://localhost:8080/")
+                .title(" ShiftGenius APIs")
+                .description("ShiftGenius APIs")
+                .termsOfServiceUrl("http://localhost:50070/")
 //                .contact("long")
 
 //                .contact(new Contact("aiyalwj", "http://localhost:8080/", "wz22261@163.com"))
